@@ -56,6 +56,7 @@ const RegisterPage = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get('email') || '';
+    const name = data.get('name') || '';
     const password = data.get('password') || '';
     const confirmPassword = data.get('confirmPassword') || '';
     if (password !== confirmPassword) {
@@ -72,7 +73,7 @@ const RegisterPage = () => {
     }
     try {
       setIsLoading(true);
-      await userAPI.register(email.toString(), password.toString());
+      await userAPI.register(email.toString(), password.toString(),name.toString());
       setIsLoading(false);
       toastSuccess("Register success");
       const templateParams = {
@@ -106,6 +107,15 @@ const RegisterPage = () => {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="name"
+                  label="name"
+                  name="name"
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   onBlur={handleEmailBlur}

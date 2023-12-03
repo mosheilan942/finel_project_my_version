@@ -12,6 +12,7 @@ import {
 import { UserContext } from "../UserContext";
 import UserInfo from "../types/UserInfo";
 import axios from "axios";
+import {  useNavigate} from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
 import Circle from '@mui/icons-material/accountcircle';
 import Personface from '@mui/icons-material/face';
@@ -26,6 +27,7 @@ export default function Profile() {
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newIcon, setNewIcon] = useState();
+  const Nav =useNavigate();
   const context = useContext(UserContext)!;
   const { userInfo } = context;
 
@@ -37,6 +39,7 @@ export default function Profile() {
 
   const handleNameEdit = () => {
     setEditName(true);
+    
   };
 
   const handleEmailEdit = () => {
@@ -66,16 +69,13 @@ export default function Profile() {
     setNewName(user?.name || "");
     setEditEmail(false);
     setNewEmail(user?.email || "");
-    // setNewIcon(null) 
+    setEditIcon(false) 
   };
 
   return (
     <Card sx={{ maxWidth: 450, margin: 2, padding: 1, marginLeft: 52 ,marginTop:8}}>
       <CardHeader title="Profile" >
         </CardHeader>
-         {/* <PersonIcon/>
-            <Personface/>
-            <Circle/> */}
       <Divider />
       <CardContent>
         <Box
@@ -111,7 +111,10 @@ export default function Profile() {
               Email: {user?.email || "N/A"}
             </Typography>
           )}
-
+            <Button  onClick={() =>Nav('/store/resetPassword')} variant="contained" color="primary" style={{ marginTop: 20 }}>
+            Reset Password
+            </Button>
+        
           <Box>
             {editName ? (
               <>
@@ -120,14 +123,6 @@ export default function Profile() {
               </>
             ) : (
               <Button onClick={handleNameEdit}>Edit Name</Button>
-            )}
-            {editEmail ? (
-              <>
-                <Button onClick={handleEmailSave}>Save Email</Button>
-                <Button onClick={handleCancel}>Cancel</Button>
-              </>
-            ) : (
-              <Button onClick={handleEmailEdit}>Edit Email</Button>
             )}
             {editEmail ? (
               <>

@@ -17,7 +17,7 @@ async function getTop5categories():Promise<Category[]> {
 }
 
 async function getProductsFromCategory(name: string): Promise<Product[]>{
-        const response = await fetch(`/api/category/${name}`);        
+        const response = await fetch(`/api/${name}`);        
         return await handleApiRes(response);
 }
 

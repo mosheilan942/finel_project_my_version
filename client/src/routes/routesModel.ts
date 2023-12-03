@@ -16,7 +16,8 @@ const ROUTES = {
     CONNECT: "/store/connect",
     WISHLIST: "/store/wishlist",
     PROFILE: "/store/profile",
-    SEARCH: "/store/search"
+    SEARCH: "/store/search",
+    RESET: "/store/resetPassword",
 };
 
 export default ROUTES;
