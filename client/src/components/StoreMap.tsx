@@ -24,6 +24,7 @@ const StoreMap = () => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const popupRef = useRef<HTMLDivElement | null>(null);
 
+ (async () => {
     const fetchLocations = () => {
         try {
             const locationsFromDataServer: Location[] = [
@@ -41,6 +42,7 @@ const StoreMap = () => {
     useEffect(() => {
         fetchLocations();
     }, []);
+})();
 
     useEffect(() => {
         if (locations.length > 0 && !mapLoaded) {
