@@ -2,6 +2,7 @@ import axios from "axios";
 import  {categories,products}  from '../data.js'
 import { c } from "vitest/dist/reporters-5f784f42.js";
 const erp = process.env.ERP_BASE_URL;
+const banner = process.env.BANNER_BASE_URL;
 const getCategories = async () => {
 
     const data = categories
@@ -29,9 +30,7 @@ const getCategoryProducts = async (name: string) => {
 
 // BANNERS 
 const getTop5Categories = async () => {
-    const res = await axios.get(`https://banners-deshbord-doker.onrender.com/banners/api/ext/bannersProduct/top5/categories`)
-    console.log('top 5 categories', res.status);
-    console.log('top 5 categories res', res.data.data);
+    const res = await axios.get(`${banner}/ext/bannersProduct/top5/categories`)
     if (res.status >= 200 && res.status < 400) {
         return res.data.data;
     }

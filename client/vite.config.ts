@@ -7,17 +7,7 @@ export default ({mode}) =>{
    return defineConfig({
         plugins: [react()],
         base: '/store',
-        server: {
-          port: 5173,
-          proxy: {
-            '/api': {
-              target: process.env.VITE_API_URI,
-              // for dev only:
-            //   target: 'https://my-server-pv9y.onrender.com',
-              changeOrigin: true,
-            }
-          }
-        },
+       
         build: {
           rollupOptions: {
               output:{

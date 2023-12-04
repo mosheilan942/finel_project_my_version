@@ -20,6 +20,7 @@ const getProductByID = asyncHandler(async (req: Request, res: Response) => {
 
 const getTop5Products = async (_req: Request, res: Response) => {
     try {
+        console.log('this is get top 5 products in controller')
         const top5Products = await productsService.getTop5Products();
         res.json(top5Products);
     } catch (error) {

@@ -28,12 +28,12 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use("/api/users", userRoutes);
-app.use("/api/users", cartRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/orders", ordersRouter);
-app.use("/api/banner", bannerRoutes);
-app.use("/api/", categoryRoutes);
+app.use("/users", userRoutes);
+app.use("/users", cartRoutes);
+app.use("/products", productRoutes);
+app.use("/orders", ordersRouter);
+app.use("/banner", bannerRoutes);
+app.use("/", categoryRoutes);
 
 app.use(errorHandler);
 

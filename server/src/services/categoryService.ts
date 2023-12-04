@@ -11,6 +11,7 @@ const getCategories = async () => {
 }
 
 const getCategoryProducts = async (req: Request) => {
+    console.log("hi from service getCategoryProducts:", req.params);
     const { name } = req.params;
     const categoryProducts = await categoryDal.getCategoryProducts(name);
     if (!categoryProducts)
