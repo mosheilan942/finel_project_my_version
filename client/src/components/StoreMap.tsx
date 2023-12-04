@@ -24,7 +24,7 @@ const StoreMap = () => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const popupRef = useRef<HTMLDivElement | null>(null);
 
-    const fetchLocations = async () => {
+    const fetchLocations = () => {
         try {
             const locationsFromDataServer: Location[] = [
                 { lon: 34.78635811677901, lat: 32.08882688424367 },
@@ -33,8 +33,7 @@ const StoreMap = () => {
                 { lon: 34.77328228161639, lat: 32.06830476724025 }
             ];
 
-            const fetchedLocations = await getLocationsInfo(locationsFromDataServer);
-            setLocations(fetchedLocations);
+            getLocationsInfo(locationsFromDataServer).then((fetchedLocations) =>setLocations(fetchedLocations));
         } catch (error) {
             console.error('Error fetching locations:', error);
         }
