@@ -64,6 +64,7 @@ const CheckoutPage = () => {
     const [orderID, setOrderID] = React.useState("");
     console.log(res);
 
+
     // Function to determine order type based on delivery method and express option
     const orderTypeReturn = () => {
         if (deliveryMethod === "pickup") return OrderEnum.SelfCollection;
@@ -121,7 +122,6 @@ const CheckoutPage = () => {
         try {
             const response = await sendOrder(orderData);
             setIsChecking(false);
-console.log("response: ", response);
 
             if (
                 typeof response === "object" &&
