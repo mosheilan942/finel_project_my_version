@@ -20,11 +20,11 @@ const sendToOms = async (order: OrderInterface) => {
       body: JSON.stringify(order),
     });
   
-    const data = await res.json();
+    const resNumOrder = await res.json();
   
-    console.log("res in sendToOms", data);
+    console.log("res in send To Oms: ", resNumOrder);
   
-    return data.data;
+    return { message: 'The order has been placed !', orderID: resNumOrder};
   };
   
 

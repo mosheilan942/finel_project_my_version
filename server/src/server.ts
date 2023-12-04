@@ -37,30 +37,6 @@ app.use("/api/", categoryRoutes);
 
 app.use(errorHandler);
 
-// app.post('/api/payment/check', (req, res) => {
-//   const debitCardDetails = req.body;
-//   setTimeout(() => {
-//     console.log(debitCardDetails);
-//     if (true) {
-//       res.status(200).json({ message: 'Credit card details are valid' });
-//     } else {
-//       res.status(400).json({ message: 'Invalid credit card details' });
-//     }
-//   }, 3000);
-// });
-
-// // Order.
-// app.post('/api/payment/order', (req, res) => {
-//   const order = req.body;
-//   setTimeout(() => {
-//     console.log(order);
-//     if (true) {
-//       res.status(200).json({ message: 'The order has been placed !', orderID: order.paymentPayPal?.orderID ? order.paymentPayPal?.orderID : "876df86sfsYGUG8979" });
-//     } else {
-//       res.status(400).json({ message: 'An error occurred in the ordering process !!!' });
-//     }
-//   }, 3000);
-// });
 
 const port = 5000;
 export const connectionString = process.env.CONNECTION_STRING;

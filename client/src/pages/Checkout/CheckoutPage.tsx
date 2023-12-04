@@ -121,6 +121,7 @@ const CheckoutPage = () => {
         try {
             const response = await sendOrder(orderData);
             setIsChecking(false);
+console.log("response: ", response);
 
             if (
                 typeof response === "object" &&
