@@ -73,7 +73,9 @@ const RegisterPage = () => {
     }
     try {
       setIsLoading(true);
-      await userAPI.register(email.toString(), password.toString(),name.toString());
+      const res = await userAPI.register(email.toString(), password.toString(),name.toString());
+        console.log('this res of register',res);
+        localStorage.setItem('name', res.name);
       setIsLoading(false);
       toastSuccess("Register success");
       const templateParams = {

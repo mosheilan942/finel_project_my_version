@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import BannerInterface  from '../types/Banner';
 import {useNavigate}  from 'react-router-dom';
-const api = import.meta.env.VITE_API_URL
+const api = import.meta.env.VITE_API_URI
 
 export default function BannerSide() {
   const [banner, setBanner] = useState<BannerInterface | null>(); 
@@ -9,13 +9,13 @@ export default function BannerSide() {
 const Navigate = useNavigate()
   async function getProducts() {
     try {
-      const response = await fetch(`${api}
-      /banner/sideBanners`);
+        console.log(`this is url in banner: ${api}/banner/sideBanners`);
+      const response = await fetch(`${api}/banner/sideBanners`);
       if (!response.ok) {
         throw new Error('Failed to fetch banner');
       }
       const data = await response.json();
-      console.log(data);
+      console.log('this is data of banner',data);
       console.log(data.message);
       setBanner(data.data[0]);
       setLoad(true);

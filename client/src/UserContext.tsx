@@ -9,7 +9,7 @@ interface UserContextProviderProps {
 
 interface UserContextType {
     userInfo: UserInfo | undefined;
-    login: (email: string, password: string) => Promise<UserInfo>;
+    login: (email: string, password: string,name:string) => Promise<UserInfo>;
     logout: () => Promise<void>;
     mode: 'dark' | 'light';
     changeMode: () => void;
@@ -36,9 +36,9 @@ const UserContextProvider: React.FC<UserContextProviderProps> = (props) => {
         localStorage.setItem('mode', mode === 'dark' ? 'light' : 'dark');
     };
 
-    const login = async (email: string, password: string) => {
+    const login = async (email: string, password: string,name:string) => {
         console.log(email);
-        const loggedUser = await usersAPI.loginUser(email, password);
+        const loggedUser = await usersAPI.loginUser(email, password,name);
         localStorage.setItem('userInfo', JSON.stringify(loggedUser));
         setUserInfo(loggedUser);
         return loggedUser;

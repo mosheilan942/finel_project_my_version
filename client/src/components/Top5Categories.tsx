@@ -45,7 +45,7 @@ export default function Top5Categories() {
           </Typography>
           {top5Categories && (
             <Grid container direction="row" justifyContent="center" alignItems="center">
-              {top5Categories.map((category) => (
+              {top5Categories.slice(0,4).map((category) => (
                 <Grid item xs key={uuidv4()}>
                   <CategoryCard category={category} />
                 </Grid>

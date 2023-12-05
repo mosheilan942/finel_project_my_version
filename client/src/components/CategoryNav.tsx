@@ -14,7 +14,6 @@ export default function CategoryNav() {
       .then((categories) => setCategories(categories))
       .catch((err) => console.log(err));
   }, []);
-
   return (
     <Paper
       elevation={2}
@@ -32,7 +31,7 @@ export default function CategoryNav() {
             : theme.palette.background.default,
       }}
     >
-      {categories.map((category) => (
+      {categories.slice(0,4).map((category) => (
         <Link
           href={`/store/category/${category.name}`}
           underline="none"
