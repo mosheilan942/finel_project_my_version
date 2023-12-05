@@ -1,10 +1,12 @@
-import { Types } from "mongoose";
 import User from "../types/User.js";
 import pg from "pg";
 const { Pool } = pg;
 import { config } from "dotenv";
 config()
+
+
 const addUser = async (user: User) => {
+    console.log("rowCount");
     const query = `INSERT INTO
     users (email, password)
     VALUES (
@@ -17,12 +19,20 @@ const addUser = async (user: User) => {
     console.log(rowCount);
     return rowCount;
 }
+
+const getAllUser = async () => {
+    const query = 'SELECT * FROM users';
+    const res = await sendQueryToDatabase(query)
+    return res;
+}
+
 const getUser = async (userId: string) => {
     const query = 'SELECT * FROM users WHERE userid ::text = $1';
     const values = [userId];
     const res = await sendQueryToDatabase(query, values)
     return res;
 }
+
 const getUserByEmail = async (email: string): Promise<User[]> => {
     const query = 'SELECT * FROM users WHERE email = $1';
     const values = [email];
@@ -30,7 +40,8 @@ const getUserByEmail = async (email: string): Promise<User[]> => {
     console.log(rows);
     return rows;
 }
-const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> => {
+
+const sendQueryToDatabase = async (query: string, values: any[] = []): Promise<any> => {
     const pool = new Pool()
     const res = await pool.connect()
     // console.log("hi from userDal, sendQueryToDatabase:", values);
@@ -39,4 +50,6 @@ const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> =
     res.release()
     return data
 }
-export default { addUser, getUser, getUserByEmail, sendQueryToDatabase };
+
+
+export default { addUser, getAllUser, getUser, getUserByEmail, sendQueryToDatabase };

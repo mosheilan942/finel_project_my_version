@@ -20,9 +20,9 @@ const app = express();
 // APP CONFIGS
 // console.log(process.env);
 app.use(
-    cors({
-        origin: "*",
-    })
+  cors({
+    origin: "*",
+  })
 );
 app.use(morgan("dev"));
 app.use(express.json());
@@ -42,11 +42,11 @@ const port = 5000;
 export const connectionString = process.env.CONNECTION_STRING;
 //await connectDB();
 app.listen(port, async () => {
-    const pool = new Pool();
-    const res = await pool.connect();
-    res.release();
-    console.log(`Database connection test completed successfully`);
-    console.log(`\nServer is running at port ${port}...`);
+  const pool = new Pool();
+  const res = await pool.connect();
+  res.release();
+  console.log(`\n\nDatabase connection test completed successfully`);
+  console.log(`\nServer is running at port ${port}...`);
 });
 
 
@@ -56,20 +56,33 @@ app.listen(port, async () => {
 // server.ts
 
 import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
+
 import { userTypeDefs } from "./GraphQL/schema/userSchema.js";
 import { userResolvers } from "./GraphQL/resolvers/userResolvers.js";
 import { productTypeDefs } from "./GraphQL/schema/productSchema.js";
 import { productResolvers } from "./GraphQL/resolvers/productResolvers.js";
 
+const startServer = async (server: ApolloServer<any>, port: number) => {
+  const { url } = await startStandaloneServer(server, {
+    listen: { port },
+  });
 
-const userServer = new ApolloServer({ typeDefs: userTypeDefs, resolvers: userResolvers });
-const productServer = new ApolloServer({ typeDefs: productTypeDefs, resolvers: productResolvers });
+  console.log(`🚀  Server ready at: ${url}`);
+};
 
-userServer.listen().then(({ url }) => {
-  console.log(`User server ready at ${url}`);
+const createApolloServer = (typeDefs: any, resolvers: any) => {
+  return new ApolloServer({ typeDefs, resolvers });
+};
+
+const userServer = createApolloServer(userTypeDefs, userResolvers);
+const productServer = createApolloServer(productTypeDefs, productResolvers);
+
+const servers = [
+  { server: userServer, port: 1000 },
+  { server: productServer, port: 2000 },
+];
+
+servers.forEach(({ server, port }) => {
+  startServer(server, port);
 });
-
-productServer.listen().then(({ url }) => {
-  console.log(`Product server ready at ${url}`);
-});
-

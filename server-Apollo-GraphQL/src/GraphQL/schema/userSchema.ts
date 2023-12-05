@@ -1,16 +1,45 @@
 export const userTypeDefs = `
-  type User {
-    id: ID!
-    username: String!
+type User {
+    userid: ID
+    name: String
     email: String!
+    password: String!
+    contactNumber: Int
+    payment: String
+    address: Address
   }
-
+  
+  type Address {
+    country: String
+    city: String
+    street: String
+    zip_code: String
+  }
+  
   type Query {
-    getUser(id: ID!): User
-    getUsers: [User]
+    getAllUsers: [User]
+    getUser(userid: ID!): User
   }
-
+  
   type Mutation {
-    createUser(username: String!, email: String!): User
+    addUser(user: UserInput): User
   }
+  
+  input UserInput {
+    userid: ID
+    name: String
+    email: String!
+    password: String!
+    contactNumber: Int
+    payment: String
+    address: AddressInput
+  }
+  
+  input AddressInput {
+    country: String
+    city: String
+    street: String
+    zip_code: String
+  }
+  
 `;

@@ -5,6 +5,8 @@ import RequestError from "../types/errors/RequestError.js";
 import { hashPassword } from "../utils/encryptionUtils.js";
 import { Types } from "mongoose";
 import cartDal from "../dal/cartDal.js";
+
+
 const addUser = async (user: User) => {
     const { email, password } = user;
     const isUserRegistered  = await userDal.getUserByEmail(email);
@@ -17,6 +19,7 @@ const addUser = async (user: User) => {
     // const newCart = await cartDal.createCart( newUser._id)
     return newUser;
 }
+
 const getUser = async (userId: string) => {
     const user = await userDal.getUser(userId);
     if(user) return user;
