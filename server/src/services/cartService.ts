@@ -9,9 +9,9 @@ import Product from '../types/Product.js';
 interface CartItem {
     userid: string;
     productid: string;
-    storequantity: string;
+    quantity: string;
     quantityofproduct: string;
-    price: string;
+    saleprice: string;
     name: string;
     description: string;
     discount: string;
@@ -24,9 +24,9 @@ interface CartItem {
     const filteredCart = cart.items.map((item: CartItem) => ({
       userid: item.userid,
       productid: item.productid,
-      storequantity: Number(item.storequantity),
+      storequantity: Number(item.quantity),
       quantityofproduct: Number(item.quantityofproduct),
-      price: Number(item.price),
+      price: Number(item.saleprice),
       name: item.name,
       description: item.description,
       discount: Number(item.discount),

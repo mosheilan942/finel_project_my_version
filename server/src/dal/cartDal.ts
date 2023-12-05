@@ -27,26 +27,27 @@ const getCartProducts = async (userId: string, itemId: string):Promise<Product[]
   const values = [userId, itemId];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
-  console.log('Query result from getCartProducts:', rows);
+//   console.log('Query result from getCartProducts:', rows);
   return rows;
 };
 
 
 const updateCart = async (userId: string, product: Product, quantityOfProduct: number) => {
+    console.log("hi from dal updatecart",product);
     console.log("hi from dal updatecart");
     const query = `INSERT
     INTO cartitems
-    (userId, productId, quantityOfProduct, quantity, salePrice, name, description, discount, image)
+    (userId, productId, quantityOfProduct, quantity, saleprice, name, description, discount, image)
     VALUES
     ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     ON CONFLICT (userid, productid) DO UPDATE
     SET quantityOfProduct = cartitems.quantityOfProduct + $3
     RETURNING *`
-    const values = [userId, product.id, Number(quantityOfProduct), product.quantity, product.salePrice, product.name, product.description, product.discount, product.image];
+    const values = [userId, product.id, Number(quantityOfProduct), product.quantity, product.saleprice, product.name, product.description, product.discount, product.image];
     // console.log("values in dal:", values);
     const res = await sendQueryToDatabase(query, values)
     const { rows } = res
-    // console.log('Query result from updateCart:', rows);
+    console.log('Query result from updateCart:', rows);
     const array = []
     array[0] = {"items":rows}
     return array;
@@ -63,7 +64,7 @@ const updateAmount = async (userId: string, productid: string, quantity: number)
   const values = [userId, productid, quantity];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
-  console.log('Query result from updateAmount:', rows);
+//   console.log('Query result from updateAmount:', rows);
   return rows;
 };
 const sendToOms = async (cart: Cart) => {
@@ -107,7 +108,7 @@ const incAmount = async (userId: string, productid: string) => {
   const values = [userId, productid];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
-  console.log('Query result:', rows);
+//   console.log('Query result:', rows);
   return rows;
 };
 const decAmount = async (userId: string, productid: string) => {
@@ -123,7 +124,7 @@ const decAmount = async (userId: string, productid: string) => {
   const values = [userId, productid];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
-  console.log('Query result:', rows);
+//   console.log('Query result:', rows);
   return rows;
 };
 const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> => {

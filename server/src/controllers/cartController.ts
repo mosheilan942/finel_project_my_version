@@ -8,7 +8,7 @@ import cartService from '../services/cartService.js';
 const getCart = asyncHandler(async (req, res) => {
   const { userId } = req
   const cart = await cartService.getCart(userId);
-  console.log("hi from cartcontrol, getCart:" ,cart);
+//   console.log("hi from cartcontrol, getCart:" ,cart);
   res.json(cart);
 });
 
@@ -18,7 +18,7 @@ const getCart = asyncHandler(async (req, res) => {
 
 const updateCart = asyncHandler(async (req, res) => {
     const { userId, product, quantityOfProduct } = req.body
-    console.log("hi from control update cart", userId,product,quantityOfProduct);
+    // console.log("hi from control update cart", userId,product,quantityOfProduct);
     const cart = await cartService.updateCart(userId, product, quantityOfProduct);
   //   console.log("hi from control update cart, res from service:", cart);
     res.status(STATUS_CODES.CREATED).json(cart);
@@ -36,13 +36,13 @@ const deleteCart = asyncHandler(async (req, res) => {
 });
 
 const deleteCartItem = asyncHandler(async (req, res) => {
-    console.log("hi from control deleteCartItem:", req.userId, req.params.pid);
+    // console.log("hi from control deleteCartItem:", req.userId, req.params.pid);
   const cart = await cartService.deleteCartItem(req.userId, req.params.pid);
   res.json(cart);
 });
 
 const patchAmount = asyncHandler(async (req, res) => {
-    console.log("hi from control patchAmount:", req.userId, req.body);
+    // console.log("hi from control patchAmount:", req.userId, req.body);
   const cart = await cartService.patchAmount(req.userId, req.body);
   res.json(cart);
 });

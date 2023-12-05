@@ -36,7 +36,7 @@ export default function WishList() {
             >
               <img src={product.image.url} alt={product.name} style={{ width: '100px' }} />
               <Typography variant="h5">{product.name}</Typography>
-              <Typography variant="h5">{product.salePrice}</Typography>
+              <Typography variant="h5">{product.saleprice}</Typography>
               <Typography variant="h5">{product.quantity}</Typography>
             </Box>
           ))}

@@ -35,8 +35,13 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
     console.log(email, password);
     const user = await authService.authUser(email, password);
     console.log("i am user:", user);
-    if (user.userid) generateToken(res, user.userid);
+    if (!user.userid){
+        throw new RequestError("User not found", STATUS_CODES.NOT_FOUND)
+        ;} 
+    const store_token = generateToken(res, user.userid)
+   
     res.json({
+        store_token,
         id: user.userid,
         email: user.email,
     });

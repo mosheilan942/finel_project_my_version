@@ -5,7 +5,7 @@ const products: Product[] = [
     {
       id: uuidv4(),
       name: "Product 1",
-      salePrice: 29.99,
+      saleprice: 29.99,
       quantity: 10,
       description: "Description for Product 1.",
       category: "Category A",
@@ -32,7 +32,7 @@ const products: Product[] = [
     {
       id: uuidv4(),
       name: "Product 2",
-      salePrice: 49.99,
+      saleprice: 49.99,
       quantity: 15,
       description: "Description for Product 2.",
       category: "Category B",

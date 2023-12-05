@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   FormControl,
@@ -8,8 +9,7 @@ import {
   Chip,
   SelectChangeEvent,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
-import {Product} from '../types/Product';
+import { Product } from '../types/Product';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -34,7 +34,7 @@ const Filter = (props: Props) => {
   const tags = Object.keys(products[0].tags);
   const tagsValues: Tags = {};
 
-  const [filters, setFilters] = useState<Tags>(() =>
+  const [filters, setFilters] = useState<any>(() =>
     tags.reduce((acc, tag) => {
       acc[tag] = [];
       return acc;
@@ -42,34 +42,33 @@ const Filter = (props: Props) => {
   );
 
   tags.forEach((tag) => {
-    tagsValues[tag] = [...new Set(products.map((p:Product) => p.tags.tag))];
+    tagsValues[tag] = [...new Set(products.map((p: any) => p.tags[tag]))];
   });
 
   const handleFilterChange = (
     tag: keyof Tags,
-    event: SelectChangeEvent<(typeof filters)[keyof Tags]>
+    event: SelectChangeEvent<{ value: string[] }>
   ) => {
     const {
       target: { value },
     } = event;
-    setFilters((prevFilters) => ({ ...prevFilters, [tag]: [...value] }));
+    setFilters((prevFilters:any) => ({ ...prevFilters, [tag]: value }));
   };
 
   useEffect(() => {
     const filterProducts = () => {
-      const newProducts = products.filter((p) => {
+      const newProducts = products.filter((p:any) => {
         for (const tag of tags) {
-          const isChecked = filters[tag].some((filter) => {
-            return p.tags.tag === filter;
-          });
-          if (!(filters[tag].length === 0 || isChecked)) return false;
+          if (filters[tag].length > 0 && !filters[tag].includes(p.tags[tag])) {
+            return false;
+          }
         }
         return true;
       });
       setProducts(newProducts);
     };
     filterProducts();
-  }, [filters]);
+  }, [filters, products, setProducts, tags]);
 
   return (
     <Box>
@@ -87,7 +86,7 @@ const Filter = (props: Props) => {
             }
             renderValue={(selected) => (
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                {selected.map((value) => (
+                {selected.map((value:any) => (
                   <Chip key={value} label={value} />
                 ))}
               </Box>

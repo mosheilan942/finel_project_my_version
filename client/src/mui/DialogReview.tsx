@@ -8,6 +8,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import RadioGroupRating from './RadioGroupRating';
 import { Typography } from '@mui/material';
 import productsAPI from '../api/productsAPI';
+import { UserContext } from "../UserContext";
+import { useContext} from "react";
+
+
 
 interface DialogReviewProps {
   // Add any props if needed
@@ -16,6 +20,8 @@ interface DialogReviewProps {
     pid: string|undefined;
     }
 const DialogReview: React.FC<DialogReviewProps> = ({pid}:DialogReviewProps) => {
+    const context = useContext(UserContext)!;
+    const { userInfo } = context;
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [review, setReview] = useState('');
@@ -42,7 +48,7 @@ const DialogReview: React.FC<DialogReviewProps> = ({pid}:DialogReviewProps) => {
   const handleSubmit = async () => {
    try{
     setOpen(false)
-    const userReview = await productsAPI.sendReviewToDB(pid as string, title, review, rating,'moshe','agever');
+    const userReview = await productsAPI.sendReviewToDB(pid||'',title, review, rating,'moshe',userInfo?.id||'');
     console.log('this is user review',userReview);
    ;   }
     catch(error){

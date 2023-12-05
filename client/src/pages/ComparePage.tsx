@@ -20,8 +20,10 @@ const ComparePage = () => {
         };
         if (userInfo) {
             try {
+                console.log('userInfo.id:', userInfo.id, 'product:', product)
                 const cart = await cartsAPI.addToCart(userInfo.id ,product, '1');
-                setProductsInCart(cart.items.length);
+                console.log('cart:', cart)
+                // setProductsInCart(cart.items.length);
                 toastSuccess('Added to cart!');
             } catch (error) {
                 console.error('Failed to fetch', error);
@@ -36,9 +38,10 @@ const ComparePage = () => {
     };
     const fetchProductsData = async (pid1: string, pid2: string) => {
         try {
-            const product1 = await productsAPI.getReviewsByProductIdFromDB(pid1);
-            const product2 = await productsAPI.getReviewsByProductIdFromDB(pid2);
-            setProducts([product1[0], product2[0]]);
+            const product1:Product = await productsAPI.getProductById(pid1);
+            const product2:Product = await productsAPI.getProductById(pid2);
+            console.log('product1:', product1)
+            setProducts([product1, product2]);
         } catch (error) {
             console.error('Failed to fetch');
         };
@@ -84,7 +87,7 @@ const ComparePage = () => {
                         </TableRow>
                         <TableRow>
                             <TableCell align='center'>Price</TableCell>
-                            {products.map((product, index) => <TableCell key={index} align='center'>{product!.salePrice}</TableCell>)}
+                            {products.map((product, index) => <TableCell key={index} align='center'>{product!.saleprice}</TableCell>)}
                         </TableRow>
                         <TableRow>
                             <TableCell></TableCell>

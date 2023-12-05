@@ -51,7 +51,7 @@ const CategoryPage = () => {
               product={product}
               navigateToOnClick={
                 isCompareMode.current
-                  ? `/store/compare/${location.state._id}/${product.id}`
+                  ? `/store/compare/${location.state.id}/${product.id}`
                   : undefined
               }
             />

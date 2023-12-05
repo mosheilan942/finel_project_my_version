@@ -27,9 +27,9 @@ const getBannersTop = async (_req: Request, res: Response) => {
 }
   
 const getBannersAll = async (req :Request, res:Response) => { 
+    console.log('controller banner',req.params);
   const {userID} = req.params
     const top5Products = await bannerService.getAllBanners( userID);
-    console.log('controll');
     res.json(top5Products);
   }
 

@@ -20,6 +20,7 @@ const getProductByID = asyncHandler(async (req: Request, res: Response) => {
 
 const getTop5Products = async (_req: Request, res: Response) => {
     try {
+        console.log('this is get top 5 products in controller')
         const top5Products = await productsService.getTop5Products();
         res.json(top5Products);
     } catch (error) {
@@ -42,8 +43,8 @@ const getTop5Products = async (_req: Request, res: Response) => {
 const saveReviewsToDB = asyncHandler(async (req: Request, res: Response) => {
   try{
     const pid = req.params.pid
-    const {reviews} = req.body
-    const result = await productsService.saveReviewsToDB( reviews,pid)
+    console.log('this is reviews', req.body)
+    const result = await productsService.saveReviewsToDB( req.body,pid)
     res.json(result)
 }
 catch(error){

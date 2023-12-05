@@ -1,7 +1,7 @@
 interface Product {
     id: string;
     name: string;
-    salePrice: number;
+    saleprice: number;
     quantity: number;
     description: string;
     category: string;

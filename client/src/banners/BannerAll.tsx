@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import BannerInterface  from '../types/Banner';
-
+const api = import.meta.env.VITE_API_URL as string;
 export default function BannerAll() {
   const [banner, setBanner] = useState<|BannerInterface| null>(null); 
 
   async function getProducts() {
     try {
-      const response = await fetch('/banners/allBanners');
+      const response = await fetch(`${api}
+      /banners/allBanners`);
       if (!response.ok) {
         throw new Error('Failed to fetch banner');
       }
