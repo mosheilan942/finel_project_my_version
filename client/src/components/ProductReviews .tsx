@@ -1,23 +1,27 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import productsAPI from "../api/productsAPI";
 //add user id and product id to review
+import { UserContext } from "../UserContext.tsx";
 
 interface Review {
     title: string;
     author: string;
     body: string;
     rating: number;
-    thumbUp: number;
-    thumbDown: number;
+    thumbup: number;
+    thumbdown: number;
 }
 
 interface ProductReviewsProps {
     reviews: Review[];
+    pid: string|undefined;
 }
 
-const ProductReviews: React.FC<ProductReviewsProps> = ({ reviews }) => {
+const ProductReviews: React.FC<ProductReviewsProps> = ({reviews,pid }) => {
+    const context = useContext(UserContext)!;
+    const { userInfo} = context;
     const [showAllReviews, setShowAllReviews] = useState(false);
     const [thumbsUpCount, setThumbsUpCount] = useState(0);
     const [thumbsDownCount, setThumbsDownCount] = useState(0);
@@ -90,7 +94,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ reviews }) => {
 
     const fetchThumbs = async (feedback: boolean) => {
         try {
-            const thumbs = await productsAPI.reviewFeedbackProduct(feedback);
+            const thumbs = await productsAPI.reviewFeedbackProduct(feedback,userInfo?.id,pid);
             console.log("this is thumbs", thumbs);
 
             // Update the thumbs count based on the feedback type
@@ -132,7 +136,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ reviews }) => {
                                                     }}
                                                 >
                                                     <ThumbUpAltIcon style={reviewStyles.thumbsIcon} />
-                                                    <span>{review.thumbUp + thumbsUpCount}</span>
+                                                    <span>{Number(review.thumbup) + thumbsUpCount}</span>
                                                 </div>
 
                                                 <div
@@ -142,7 +146,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ reviews }) => {
                                                     }}
                                                 >
                                                     <ThumbDownAltIcon style={reviewStyles.thumbsIcon} />
-                                                    <span>{review.thumbDown + thumbsDownCount}</span>
+                                                    <span>{Number(review.thumbdown) + thumbsDownCount}</span>
                                                 </div>
                                             </div>
                                         </div>

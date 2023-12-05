@@ -29,7 +29,7 @@ async function register(email: string, password: string):Promise<UserInfo> {
     console.log('hello from register api',email,password)
 
     const response = await fetch(`${api}
-/api/users/register`, {
+/users/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

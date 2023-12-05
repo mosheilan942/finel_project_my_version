@@ -10,7 +10,6 @@ const getProductByID = asyncHandler(async (req: Request, res: Response) => {
     try {
         const { pid } = req.params
         const product = await productsService.getProductByID(pid)
-        console.log('controll product by id',product);
         res.json(product)
     } catch (error) {
         console.log(error);   
@@ -45,6 +44,7 @@ const saveReviewsToDB = asyncHandler(async (req: Request, res: Response) => {
     const pid = req.params.pid
     console.log('this is reviews', req.body)
     const result = await productsService.saveReviewsToDB( req.body,pid)
+    console.log('this is result for review', result)
     res.json(result)
 }
 catch(error){
@@ -65,11 +65,11 @@ const getReviewsFromDB = asyncHandler(async (req: Request, res: Response) => {
 
 const feedbackReviews = asyncHandler(async (req: Request, res: Response) => {
 
-    console.log('this is feedback', req.params.pid)
+    console.log('this is feedback', req.body)
     try{
-        const pid = req.params.pid
-        const {reviewId, feedback} = req.body
-        const result = await productsService.feedbackReviews(pid,reviewId,feedback)
+        
+        const {pid, feedback,userId} = req.body
+        const result = await productsService.feedbackReviews(pid,userId,feedback)
     }
     catch(error){
         res.json(error)

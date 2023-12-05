@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS reviews(
     rating NUMERIC,
     thumbUp NUMERIC,
     thumbDown NUMERIC,
-    CONSTRAINT userid FOREIGN KEY(userid) REFERENCES users(userid),
-    CONSTRAINT productid FOREIGN KEY(productid) REFERENCES cartitems(productid)
+    UNIQUE(productId, userId),
+    CONSTRAINT userid FOREIGN KEY(userid) REFERENCES users(userid)
 );
 DROP Table users ;
 DROP Table cartitems ;
