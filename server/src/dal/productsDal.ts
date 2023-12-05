@@ -40,7 +40,7 @@ const getTop5Products =  async () => {
 };
 
 const getTop5ForCategory = async (name: string) => {
-    const res = await axios.get(`${process.env.BANNER_BASE_URI}/topFiveCategories${name}`)
+    const res = await axios.get(`${process.env.BANNER_BASE_URI}/topFiveCategories${name}`
     return res.data
 };
 

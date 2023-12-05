@@ -12,7 +12,7 @@ const oms = process.env.OMS_BASE_URL;
 const sendToOms = async (order: OrderInterface) => {
     console.log("order in sendToOms", order);
   
-    const res = await fetch(`${oms}/api/orders`, {
+    const res = await fetch(`${oms}/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +59,6 @@ const sendToOms = async (order: OrderInterface) => {
     const res = await sendQueryToDatabase(query, values);
     console.log('this res',res)
     const { rowCount } = res;
-    console.log('this row count',rowCount);
     return rowCount;
 };
 
@@ -81,7 +80,7 @@ const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> =
 
 
 const getFromOms = async (userId: string) => {
-  const res = await axios.get(`${oms}api/orders/${userId}`);
+  const res = await axios.get(`${oms}/orders/${userId}`);
   return res.data.data;
 };
 
