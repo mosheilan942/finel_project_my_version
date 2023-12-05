@@ -24,7 +24,7 @@ async function getUser(): Promise<UserInfo> {
 /users/`);
     return await handleApiRes(response);
 }
-async function register(email: string, password: string):Promise<UserInfo> {
+async function register(email: string, password: string,name:string):Promise<UserInfo> {
 
     console.log('hello from register api',email,password)
 
@@ -34,7 +34,7 @@ async function register(email: string, password: string):Promise<UserInfo> {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password , name}),
     });
     return await handleApiRes(response);
 }

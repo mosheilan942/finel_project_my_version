@@ -5,6 +5,7 @@ const api = import.meta.env.VITE_API_URL
 
 export default function BannerSide() {
   const [banner, setBanner] = useState<BannerInterface | null>(); 
+  const [load, setLoad] = useState(false);
 const Navigate = useNavigate()
   async function getProducts() {
     try {
@@ -17,6 +18,7 @@ const Navigate = useNavigate()
       console.log(data);
       console.log(data.message);
       setBanner(data.data[0]);
+      setLoad(true);
     } catch (error) {
       console.error('Error fetching banner:', error);
       setBanner(null); 
@@ -28,9 +30,8 @@ const Navigate = useNavigate()
 
   return (
     <>
-      {banner ? (
-
-        <div onClick={()=>{Navigate(`store/product/${banner.productID}`)}} style={{ position: 'fixed', height: '500px', left: 0, top: 75, zIndex: 1000 }}>
+      {load ? (
+        <div onClick={()=>{Navigate(`store/product/${banner?.productID}`)}} style={{ position: 'fixed', height: '500px', left: 0, top: 75, zIndex: 1000 }}>
           <img src={banner?.image.url} alt={banner?.image.alt} style={{ width: '100px' }} />
         </div>
       ) : (
