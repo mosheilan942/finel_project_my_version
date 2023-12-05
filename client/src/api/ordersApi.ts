@@ -25,9 +25,9 @@ async function sendOrder(order: OrderInterface): Promise<OrderInterface> {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({order:order}),
+        body: JSON.stringify({order}),
     });
-
+    console.log("response: ", response);
     return await handleApiRes(response);
 }
 

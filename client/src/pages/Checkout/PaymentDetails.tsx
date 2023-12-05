@@ -173,7 +173,7 @@ const PaymentDetails = (props: Props) => {
 
     return (
         <React.Fragment>
-            <Typography component="h1" variant="h6" align="center">
+            <Typography component="h1" variant="h5" align="center">
                 Choose a payment method
             </Typography>
 

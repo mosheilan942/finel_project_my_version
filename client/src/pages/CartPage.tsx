@@ -22,6 +22,14 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "../routes/routesModel";
 // import ProductCart from "../types/ProductCart";
 
+const totalProducts = (products: any[]) => {
+    let total = 0;
+    products.forEach((product) => {
+        total += product.quantityofproduct
+    });
+    return total;
+}
+
 const CartPage = () => {
     const [cartItems, setCartItems] = useState<any>([]);
     const [loading, setLoading] = useState(true);
@@ -29,6 +37,7 @@ const CartPage = () => {
     const { userInfo, setProductsInCart } = context;
     const [totalAmount, setTotalAmount] = useState<number>(0);
     const navigate = useNavigate();
+
     useEffect(() => {
         const fetchCart = async () => {
             try {
@@ -61,12 +70,12 @@ const CartPage = () => {
     }, [userInfo]);
     useEffect(() => {
         if (cartItems.length !== 0 && userInfo) {
-            const total = cartItems.reduce((sum:any, item:any) => {
+            const total = cartItems.reduce((sum: any, item: any) => {
                 return sum + item.quantityofproduct * item.price;
             }, 0);
             setTotalAmount(total);
         } else {
-            const total = cartItems.reduce((sum:any, item:any) => {
+            const total = cartItems.reduce((sum: any, item: any) => {
                 return sum + item.quantity * item.product_id.salePrice;
             }, 0);
             setTotalAmount(total);
@@ -98,21 +107,7 @@ const CartPage = () => {
             toastError("Error removing product from cart");
         }
     };
-    // const buyNow = async () => {
-    //     if (userInfo) {
-    //         console.log('Product purchased!');
-    //         alert(`Total Amount: ${totalAmount.toFixed(3)}`);
-    //         const newCart = await cartsAPI.deleteCart();
-    //         setProductsInCart(newCart.items.length);
-    //         setCartItems(newCart.items);
-    //     } else {
-    //         cartLocalStorageUtils.clearCart();
-    //         setCartItems([])
-    //         setProductsInCart(0);
-    //         alert(`Total Amount: $ ${totalAmount.toFixed(3)}`);
-    //     };
-    // }
-    
+
     const buyNow = async () => {
         if (userInfo) {
             console.log("Product purchased!");
@@ -122,9 +117,9 @@ const CartPage = () => {
         }
     };
 
-       const updateCartItemQuantity = (productId: string, newQuantity: number) => {
-        setCartItems((prevCartItems:any) =>
-            prevCartItems.map((item:any) => {
+    const updateCartItemQuantity = (productId: string, newQuantity: number) => {
+        setCartItems((prevCartItems: any) =>
+            prevCartItems.map((item: any) => {
                 if (userInfo) {
                     return item.productid === productId
                         ? { ...item, quantityofproduct: newQuantity }
@@ -161,7 +156,7 @@ const CartPage = () => {
             style={{ display: "flex", alignItems: "start" }}
         >
             <Grid item xs={8}>
-                {cartItems.map((item:any) => {
+                {cartItems.map((item: any) => {
                     if (userInfo) {
                         return (
                             <ProductCartCard
@@ -204,41 +199,39 @@ const CartPage = () => {
                                 primary={`Number of Items: ${cartItems.length}`}
                             />
                         </ListItem>
-                        {cartItems.map((item:any) =>
+                        {cartItems.map((item: any) =>
                             userInfo ? (
                                 <ListItem key={`ListItem-${uuidv4()}`}>
                                     <ListItemText
                                         primary={item.name}
-                                        secondary={`Quantity: ${
-                                            item.quantityofproduct
-                                        } | Total Price: $ ${
-                                            (
+                                        secondary={`Quantity: ${item.quantityofproduct
+                                            } | Total Price: $ ${(
                                                 item.quantityofproduct *
                                                 item.price
-                                            ).toFixed(3) || 0
-                                        }`}
+                                            ).toFixed(2) || 0
+                                            }`}
                                     />
                                 </ListItem>
-                            ) :(
+                            ) : (
                                 <ListItem key={`ListItem-${uuidv4()}`}>
-                                <ListItemText
-                                    primary={item.product_id.name}
-                                    secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.product_id.salePrice).toFixed(3) || 0}`}
-                                />
-                             
-                            </ListItem>
-                            
+                                    <ListItemText
+                                        primary={item.product_id.name}
+                                        secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.product_id.salePrice).toFixed(2) || 0}`}
+                                    />
+
+                                </ListItem>
+
 
                             )
                         )}
 
                         <ListItem>
-                            <ListItemText primary={`Subtotal (items: ):`} />
+                            <ListItemText primary={`Subtotal (items: ${totalProducts(cartItems)}):`} />
                             <Typography
                                 variant="h5"
                                 sx={{ marginLeft: "1rem" }}
                             >
-                                $ {totalAmount.toFixed(3) || 0}
+                                $ {totalAmount.toFixed(2) || 0}
                             </Typography>
                         </ListItem>
                         <ListItem>
