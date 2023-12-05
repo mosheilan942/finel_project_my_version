@@ -24,7 +24,6 @@ const PasswordReset: React.FC = () => {
       const response = await axios.post(`api/users/resetPassword/${email}`, { password });
       console.log(response.data);
       if (response.status >= 200 && response.status < 400) {
-        // Handle successful password reset if needed
       }
     } catch (error) {
       console.error("Error sending new password:", error);

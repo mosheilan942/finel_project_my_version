@@ -20,7 +20,7 @@ const getSideFromBanners=  async () => {
 const getTopFromBanners = async () => {
     const res = await axios.get(`${banner}/bannersImage/ext/?limit=1&size=side&`)    
     if (res.status >= 200 && res.status < 400) {
-        return res.data;
+        return res.data
         }
         throw new Error("error");
     };
@@ -33,8 +33,6 @@ const getAllFromBanners=  async (userID:string) => {
         }
         throw new Error("error");
     };
-
-
 
 
 export default { getSideFromBanners, getAllFromBanners ,getTopFromBanners }

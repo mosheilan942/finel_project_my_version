@@ -12,12 +12,7 @@ import {
 import { UserContext } from "../UserContext";
 import UserInfo from "../types/UserInfo";
 import axios from "axios";
-import {  useNavigate} from 'react-router-dom';
-import PersonIcon from '@mui/icons-material/Person';
-import Circle from '@mui/icons-material/accountcircle';
-import Personface from '@mui/icons-material/face';
-
-
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const [user, setUser] = useState<UserInfo | undefined>(undefined);
@@ -25,7 +20,7 @@ export default function Profile() {
   const [editEmail, setEditEmail] = useState(false);
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
-  const Nav =useNavigate();
+  const Nav = useNavigate();
   const context = useContext(UserContext)!;
   const { userInfo } = context;
 
@@ -37,7 +32,6 @@ export default function Profile() {
 
   const handleNameEdit = () => {
     setEditName(true);
-    
   };
 
   const handleEmailEdit = () => {
@@ -70,9 +64,16 @@ export default function Profile() {
   };
 
   return (
-    <Card sx={{ maxWidth: 450, margin: 2, padding: 1, marginLeft: 52 ,marginTop:8}}>
-      <CardHeader title="Profile" >
-        </CardHeader>
+    <Card
+      sx={{
+        maxWidth: 450,
+        margin: 2,
+        padding: 1,
+        marginLeft: 52,
+        marginTop: 8,
+      }}
+    >
+      <CardHeader title="Profile"></CardHeader>
       <Divider />
       <CardContent>
         <Box
@@ -96,15 +97,15 @@ export default function Profile() {
               Name: {user?.name || "N/A"}
             </Typography>
           )}
-           {editName ? (
-              <>
-                <Button onClick={handleNameSave}>Save Name</Button>
-                <Button onClick={handleCancel}>Cancel</Button>
-              </>
-            ) : (
-              <Button onClick={handleNameEdit}>Edit Name</Button>
-            )}
-         
+          {editName ? (
+            <>
+              <Button onClick={handleNameSave}>Save Name</Button>
+              <Button onClick={handleCancel}>Cancel</Button>
+            </>
+          ) : (
+            <Button onClick={handleNameEdit}>Edit Name</Button>
+          )}
+
           {editEmail ? (
             <TextField
               value={newEmail}
@@ -116,24 +117,25 @@ export default function Profile() {
             <Typography variant="h5" color="text.secondary">
               Email: {user?.email || "N/A"}
             </Typography>
-
           )}
-            {editEmail ? (
-              <>
-                <Button onClick={handleEmailSave}>Save Email</Button>
-                <Button onClick={handleCancel}>Cancel</Button>
-              </>
-            ) : (
-              <Button onClick={handleEmailEdit}>Edit Email</Button>
-            )}
+          {editEmail ? (
+            <>
+              <Button onClick={handleEmailSave}>Save Email</Button>
+              <Button onClick={handleCancel}>Cancel</Button>
+            </>
+          ) : (
+            <Button onClick={handleEmailEdit}>Edit Email</Button>
+          )}
 
-            <Button  onClick={() =>Nav('/store/resetPassword')} variant="contained" color="primary" style={{ marginTop: 20 }}>
+          <Button
+            onClick={() => Nav("/store/resetPassword")}
+            variant="contained"
+            color="primary"
+            style={{ marginTop: 20 }}
+          >
             Reset Password
-            </Button>
-        
-          <Box>
-           
-          </Box>
+          </Button>
+          <Box></Box>
         </Box>
       </CardContent>
     </Card>
