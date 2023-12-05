@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import productsAPI from '../api/productsAPI';
 import {Product} from '../types/Product';
-import ProductCard from './ProductCard';
 import { Grid, Typography } from '@mui/material';
+import ProductCardsForHomePage from '../pages/ProductCardsForHomePage';
 
 function Top5ProductsPage() {
   const [top5Products, setTop5Products] = useState<Product[]>([]);
@@ -35,13 +35,17 @@ function Top5ProductsPage() {
       <Grid
         container
         direction="row"
-        justifyContent="center"
+        justifyContent="space-between" 
         alignItems="center"
-      >
+        sx={{
+          marginLeft: '3px', 
+          marginRight: '3px',
+          paddingLeft: '3px', 
+          paddingRight: '3px', 
+        }}      >
         {top5Products.map((product) => (
-          <Grid item xs key={product.id}>
-            <ProductCard key={product.id} product={product} />
-          </Grid>
+            <ProductCardsForHomePage key={product.id} product={product} />
+         
         ))}
       </Grid>
     </>

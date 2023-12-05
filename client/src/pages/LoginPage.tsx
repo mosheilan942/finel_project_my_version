@@ -95,7 +95,7 @@ const LoginPage = () => {
                     {isLoading && <p>Loading...</p>}
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <Link href={ROUTES.RESET} variant="body2" >
                                 Forgot password?
                             </Link>
                         </Grid>

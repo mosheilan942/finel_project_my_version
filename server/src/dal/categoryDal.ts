@@ -27,9 +27,7 @@ const getCategoryProducts = async (name: string) => {
 
 // BANNERS 
 const getTop5Categories = async () => {
-    const res = await axios.get(`https://banners-deshbord-doker.onrender.com/banners/api/ext/bannersProduct/top5/categories`)
-    // console.log('top 5 categories', res.status);
-    // console.log('top 5 categories res', res.data.data);
+    const res = await axios.get(`https://banners-deshbord-doker.onrender.com/ext/bannersProduct/top5/categories`)
     if (res.status >= 200 && res.status < 400) {
         return res.data.data;
     }

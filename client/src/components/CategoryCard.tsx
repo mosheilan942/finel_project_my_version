@@ -30,7 +30,6 @@ export default function CategoryCard({ category }: props) {
       
     }, }}>
       <CardActionArea onClick={handleClick}>
-        <CardMedia component="img" height="140" image={category.imageUrl} alt="" />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {category.name}

@@ -25,7 +25,7 @@ const getTop5Products =  async () => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: `https://banners-deshbord-doker.onrender.com/banners/api/ext/bannersProduct/top5/products`,
+        url: `https://banners-deshbord-doker.onrender.com/ext/bannersProduct/top5/products`,
         headers: { 
           'Content-Type': 'application/json'
         },
@@ -38,9 +38,10 @@ const getTop5Products =  async () => {
 };
 
 const getTop5ForCategory = async (name: string) => {
-    const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/topFiveCategories{name}`)
+    const res = await axios.get(`${process.env.BANNER_BASE_URI}/topFiveCategories${name}`)
     return res.data
 };
+
 const saveReviewsToDB = async (reviews: any, pid: string) => {
     console.log('hellow from dal', reviews,pid);
     return null

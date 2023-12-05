@@ -4,7 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { To, useNavigate } from 'react-router-dom';
-import {Product} from '../types/Product';
+import { Product } from '../types/Product';
 
 type props = {
   product: Product;
@@ -12,35 +12,36 @@ type props = {
 };
 
 export default function ProductCard({ product, navigateToOnClick }: props) {
-  
   const navigate = useNavigate();
-  const handleCLick = async () => {
+
+  const handleClick = async () => {
     try {
       navigate(navigateToOnClick || `/store/product/${product.id}`);
-      // await productsAPI.patchProductClick(product._id);
     } catch (err) {
       console.error((err as Error).message);
     }
   };
+
   return (
-    <Card onClick={handleCLick} sx={{ 
-      maxWidth: 300, // adjust this value to change the size of the card
-      margin: '5px', 
-      boxSizing:'border-box',
-      boxShadow: '0 5px 8px rgba(0, 0, 0.9, 0.8)',
-      marginBlock:'10px',
-      transition: 'transform 0.3s', // animate the transform property
-      '&:hover': {
-        transform: 'scale(1.03)', // scale the card up by 105% when hovered over
-        
-      },
-    }}>
-      <CardActionArea >
-        <CardMedia
-          component="img"
-          image={product.image.url}
-          alt={product.name}
-        />
+    <Card
+      onClick={handleClick}
+      sx={{
+        width: 370, 
+        height: 420, 
+        margin: '20px',
+        marginBottom: '20px',
+        padding: '3px',
+        boxSizing: 'border-box',
+        boxShadow: '0 5px 8px rgba(0, 0, 0.9, 0.8)',
+        marginBlock: '8px',
+        transition: 'transform 0.3s',
+        '&:hover': {
+          transform: 'scale(1.03)',
+        },
+      }}
+    >
+      <CardActionArea>
+        <CardMedia component="img" image={product.image.url} alt={product.name} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {product.name}

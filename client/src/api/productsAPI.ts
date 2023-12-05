@@ -3,9 +3,7 @@ import handleApiRes from "./apiResHandler";
 
 // external
 async function getTop5Products(): Promise<Product[]> {
-
     const response = await fetch('/api/products/topFiveProducts');
-    
     const res = await handleApiRes(response);
     console.log('hello from apiProduct: top 5',res);
     return res

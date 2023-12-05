@@ -23,10 +23,8 @@ export default function Profile() {
   const [user, setUser] = useState<UserInfo | undefined>(undefined);
   const [editName, setEditName] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
-  const [editIcon, setEditIcon] = useState(false);
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
-  const [newIcon, setNewIcon] = useState();
   const Nav =useNavigate();
   const context = useContext(UserContext)!;
   const { userInfo } = context;
@@ -69,7 +67,6 @@ export default function Profile() {
     setNewName(user?.name || "");
     setEditEmail(false);
     setNewEmail(user?.email || "");
-    setEditIcon(false) 
   };
 
   return (
@@ -99,6 +96,15 @@ export default function Profile() {
               Name: {user?.name || "N/A"}
             </Typography>
           )}
+           {editName ? (
+              <>
+                <Button onClick={handleNameSave}>Save Name</Button>
+                <Button onClick={handleCancel}>Cancel</Button>
+              </>
+            ) : (
+              <Button onClick={handleNameEdit}>Edit Name</Button>
+            )}
+         
           {editEmail ? (
             <TextField
               value={newEmail}
@@ -110,20 +116,8 @@ export default function Profile() {
             <Typography variant="h5" color="text.secondary">
               Email: {user?.email || "N/A"}
             </Typography>
+
           )}
-            <Button  onClick={() =>Nav('/store/resetPassword')} variant="contained" color="primary" style={{ marginTop: 20 }}>
-            Reset Password
-            </Button>
-        
-          <Box>
-            {editName ? (
-              <>
-                <Button onClick={handleNameSave}>Save Name</Button>
-                <Button onClick={handleCancel}>Cancel</Button>
-              </>
-            ) : (
-              <Button onClick={handleNameEdit}>Edit Name</Button>
-            )}
             {editEmail ? (
               <>
                 <Button onClick={handleEmailSave}>Save Email</Button>
@@ -132,6 +126,13 @@ export default function Profile() {
             ) : (
               <Button onClick={handleEmailEdit}>Edit Email</Button>
             )}
+
+            <Button  onClick={() =>Nav('/store/resetPassword')} variant="contained" color="primary" style={{ marginTop: 20 }}>
+            Reset Password
+            </Button>
+        
+          <Box>
+           
           </Box>
         </Box>
       </CardContent>

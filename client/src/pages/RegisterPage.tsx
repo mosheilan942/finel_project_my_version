@@ -168,8 +168,8 @@ const RegisterPage = () => {
             </Button>
             {isLoading && <p>Loading...</p>}
             <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href={ROUTES.LOGIN} variant="body2">
+              <Grid item >
+                <Link href={ROUTES.LOGIN} variant="body2" >
                   Already have an account? Login
                 </Link>
               </Grid>
