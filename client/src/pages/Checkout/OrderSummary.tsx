@@ -7,6 +7,9 @@ import Grid from '@mui/material/Grid';
 import { Box, Button } from '@mui/material';
 import { CreditCardDetails } from '../../types/creditCard';
 import { Address } from '../../types/order';
+import { UserContext } from '../../UserContext';
+import cartsAPI from '../../api/cartsAPI';
+import * as cartLocalStorageUtils from "../../utils/cartLocalStorageUtils";
 
 type Props = {
     totalAmount: number;
@@ -15,20 +18,6 @@ type Props = {
     onBack: Function;
     onPlaceOrder: Function;
 }
-
-const products = [
-    {
-        name: 'Product 1',
-        desc: 'A nice thing',
-        price: '$9.99',
-    },
-    {
-        name: 'Product 2',
-        desc: 'Another thing',
-        price: '$3.45',
-    },
-    { name: 'Shipping', desc: '', price: 'Free' },
-];
 
 
 function getLastFourDigits(creditCardNumber: string): string {
@@ -40,9 +29,41 @@ function getLastFourDigits(creditCardNumber: string): string {
 }
 
 export default function OrderSummary(props: Props) {
+    const [cartItems, setCartItems] = React.useState<any[]>([]);
+    const context = React.useContext(UserContext)!;
+    const { userInfo } = context;
     const { totalAmount } = props;
     const creditCardDetails = props.creditCardDetails;
     const address = props.shippingDetails;
+
+    React.useEffect(() => {
+        const fetchCart = async () => {
+            try {
+                if (userInfo) {
+                    console.log("hi from cartpage this is userinfo", userInfo);
+
+                    const cartData = await cartsAPI.getCart(userInfo.id);
+                    console.log("hi from cartData in cartpage:", cartData[0]);
+
+                    setCartItems(cartData);
+                } else {
+                    const localCart = cartLocalStorageUtils.getCart();
+                    console.log(
+                        "hi from cartpage this is localCart",
+                        localCart
+                    );
+                    if (localCart) {
+                        setCartItems(localCart);
+                    } else {
+                        setCartItems([]);
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching cart:", error);
+            }
+        };
+        fetchCart();
+    }, [userInfo]);
 
     const addresses = [
         { name: 'Country:', detail: address.country },
@@ -64,17 +85,24 @@ export default function OrderSummary(props: Props) {
             <Typography variant="h6" gutterBottom>
 
             </Typography>
-            <Typography component="h1" variant="h6" align="center">
+            <Typography component="h1" variant="h5" align="center">
                 Order summary
             </Typography>
 
             <hr style={{ width: '90%', color: 'gray', marginBottom: '40px' }} />
 
+            <Typography component="h1" variant="h6" align="center">
+                Your products
+            </Typography>
+
             <List disablePadding>
-                {products.map((product) => (
+                {cartItems.map((product) => (
                     <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-                        <ListItemText primary={product.name} secondary={product.desc} />
-                        <Typography variant="body2">{product.price}</Typography>
+                        <ListItemText
+                            primary={product.name}
+                            secondary={`Quantity: ${product.quantityofproduct} .`}
+                        />
+                        <Typography variant="body2">$ {product.price.toFixed(2)}</Typography>
                     </ListItem>
                 ))}
 
@@ -83,7 +111,7 @@ export default function OrderSummary(props: Props) {
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Total" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        ${totalAmount}
+                        $ {totalAmount.toFixed(2)}
                     </Typography>
                 </ListItem>
             </List>

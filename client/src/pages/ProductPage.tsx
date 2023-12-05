@@ -201,7 +201,7 @@ const ProductPage = () => {
                     padding: "20px",
                 }}
             >
-                <ProductReviews reviews={reviews} />
+                <ProductReviews reviews={reviews} pid={pid} />
                 <br />
             </Paper>
             

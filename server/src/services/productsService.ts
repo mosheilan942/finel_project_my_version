@@ -41,8 +41,9 @@ const getReviewsFromDB = async (pid: string) => {
     return product
 }
 
-const feedbackReviews = async (pid: string, reviewId: string, feedback: string) => {
-    const product = await productsDal.feedbackReviews(pid, reviewId, feedback)
+const feedbackReviews = async (pid: string, userId: string, feedback: boolean) => {
+    
+    const product = await productsDal.feedbackReviews(pid, userId, feedback)
     if (!product)
         throw new RequestError('product not found', STATUS_CODES.BAD_REQUEST)
     return product

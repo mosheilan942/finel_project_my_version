@@ -19,7 +19,6 @@ const getCart = async (userId: string) => {
   // console.log("hi from gatcart in Dal:", userId);
   const { rows } = res
   const cart = {"items":rows}
-  console.log('Query result from getCart dal:', cart);
   return cart;
 };
 const getCartProducts = async (userId: string, itemId: string):Promise<Product[]> => {
@@ -33,8 +32,7 @@ const getCartProducts = async (userId: string, itemId: string):Promise<Product[]
 
 
 const updateCart = async (userId: string, product: Product, quantityOfProduct: number) => {
-    console.log("hi from dal updatecart",product);
-    console.log("hi from dal updatecart");
+    // console.log("hi from dal updatecart",product);
     const query = `INSERT
     INTO cartitems
     (userId, productId, quantityOfProduct, quantity, saleprice, name, description, discount, image)
@@ -47,7 +45,6 @@ const updateCart = async (userId: string, product: Product, quantityOfProduct: n
     // console.log("values in dal:", values);
     const res = await sendQueryToDatabase(query, values)
     const { rows } = res
-    console.log('Query result from updateCart:', rows);
     const array = []
     array[0] = {"items":rows}
     return array;
@@ -91,7 +88,6 @@ const deleteCartItem = async (userId: string, productId: string) => {
   const values = [userId, productId];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
-  console.log('Query result from updateAmount:', rows);
   return rows;
 
 };

@@ -6,8 +6,7 @@ const api = import.meta.env.VITE_API_URI
 
 async function checkDebitCard(debitCard: CreditCardDetails): Promise<CreditCardDetails> {
     //change end point
-    const response = await fetch(`${api}
-    /orders/checkout/check`, {
+    const response = await fetch(`${api}/orders/checkout/check`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -26,9 +25,9 @@ async function sendOrder(order: OrderInterface): Promise<OrderInterface> {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({order:order}),
+        body: JSON.stringify({order}),
     });
-
+    console.log("response: ", response);
     return await handleApiRes(response);
 }
 

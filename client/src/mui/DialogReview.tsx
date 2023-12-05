@@ -68,6 +68,7 @@ const DialogReview: React.FC<DialogReviewProps> = ({pid}:DialogReviewProps) => {
         <DialogTitle>Review</DialogTitle>
         <DialogContent>
           <TextField
+          required
             autoFocus
             margin="dense"
             id="title"
@@ -79,6 +80,7 @@ const DialogReview: React.FC<DialogReviewProps> = ({pid}:DialogReviewProps) => {
             onChange={handleTitleChange}
           />
           <TextField
+          required
             autoFocus
             margin="dense"
             id="review"

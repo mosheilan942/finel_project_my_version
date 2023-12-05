@@ -57,11 +57,19 @@ async function searchProducts(searchTerm: string): Promise<Product[]> {
     return await handleApiRes(response);
 }
 
-async function reviewFeedbackProduct(feedback:boolean){
-    const response = await fetch(`${api}
-/products/${feedback}/reviews/feedback`);
+async function reviewFeedbackProduct(feedback:boolean,userId:any,pid:any){
+const response = await fetch(`${api}
+/products/reviews/feedback`,{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: userId,feedback:feedback,pid:pid }),
+    })
     return await handleApiRes(response);
-}
+
+};
+
 
 export default{ searchProducts,getTop5Products, getProductById, getReviewsByProductIdFromDB, reviewFeedbackProduct,sendReviewToDB};
 
