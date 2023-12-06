@@ -19,6 +19,7 @@ type User {
   type Query {
     getAllUsers: [User]
     getUser(userid: ID!): User
+    getUserByEmail(email: String!): User
   }
   
   type Mutation {

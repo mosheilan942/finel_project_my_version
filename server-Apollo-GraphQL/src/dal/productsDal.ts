@@ -1,19 +1,19 @@
 import axios from "axios";
-import {products} from "../data.js";
-import Product from "../types/Product.js";
-import { c } from "vitest/dist/reporters-5f784f42.js";
+import { categories, products } from "../data.js";
 import pg from "pg";
 const { Pool } = pg;
 const erp = process.env.ERP_BASE_URL;
 const banner = process.env.BANNER_BASE_URL;
 
-const getProductByID = async (id:string) => {
+
+
+const getProductByID = async (id: string) => {
     // console.log('hellow from dal get poroduct', id);
     const res = await fetch(`${erp}/shopInventory/${id}`)
     const resConverted = await res.json()
     // console.log('hellow from dal fetch product bybyid', resConverted);
-    if(res.ok){
-        
+    if (res.ok) {
+
         return resConverted
     }
     const data = products
@@ -22,26 +22,52 @@ const getProductByID = async (id:string) => {
     return data[0]
 }
 
+const getProductBySearch = async (search: string) => {
+    const res = await fetch(`${erp}/shopInventory/?search=${search}`)
+    console.log('from search firs', res)
+    const resProducts = await res.json()
+    console.log('hellow from dal search', resProducts);
 
-const getTop5Products =  async () => {
+    if (res.ok && resProducts.length > 0) {
+        return resProducts
+    }
+    const data = products
+    // console.log('hellow from dal search data', data); 
+    return data
+}
+
+const getTop5Products = async () => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
         url: `${banner}/ext/bannersProduct/top5/products`,
-        headers: { 
-          'Content-Type': 'application/json'
+        headers: {
+            'Content-Type': 'application/json'
         },
-      };
+    };
 
-        const res = await axios.request(config)
-        return res.data.data
-              
-    
+    const res = await axios.request(config)
+    return res.data.data
+
+
 };
 
-const getTop5ForCategory = async (name: string) => {
-    const res = await axios.get(`${process.env.BANNER_BASE_URI}/topFiveCategories{name}`)
-    return res.data
+const getTop5ForCategorys = async () => {
+    // const res = await axios.get(`${process.env.BANNER_BASE_URI}/topFiveCategories{name}`)
+    // console.log(res);
+    // return res.data
+
+    const data = categories;
+    return data;
+};
+
+const getCategoryByName = async (name: string) => {
+    // const res = await axios.get(`${process.env.BANNER_BASE_URI}/topFiveCategories{name}`)
+    // console.log(res);
+    // return res.data
+
+    const data = categories.find((categorie) => categorie.name === name)
+    return data
 };
 
 const saveReviewsToDB = async (reviews: any, pid: string) => {
@@ -49,14 +75,14 @@ const saveReviewsToDB = async (reviews: any, pid: string) => {
     const thumbUp = 0;
     const thumbDown = 0;
     const query = `INSERT INTO reviews (userid , productid ,author,title,body,rating,thumbUp,thumbDown) VALUES ($1, $2, $3, $4, $5, $6,$7,$8)`;
-    const values = [reviews.userId, pid, reviews.author, reviews.title, reviews.review, reviews.rating,thumbUp,thumbDown];
+    const values = [reviews.userId, pid, reviews.author, reviews.title, reviews.review, reviews.rating, thumbUp, thumbDown];
     const res = await sendQueryToDatabase(query, values)
     const { rows } = res
     return rows;
-    
+
 }
 
-const getReviewsFromDB = async (pid: string) => { 
+const getReviewsFromDB = async (pid: string) => {
     const query = `SELECT * FROM reviews WHERE productid = $1`;
     const values = [pid];
     const res = await sendQueryToDatabase(query, values)
@@ -65,9 +91,9 @@ const getReviewsFromDB = async (pid: string) => {
     return rows;
 }    // console.log('Query result from getReviewsFromDB:', rows);
 
-const feedbackReviews = async (pid: string,userId: string, feedback: boolean) => {
-    console.log('hello from dal pid', pid,"userid", userId,'feedbeack', feedback);
-    
+const feedbackReviews = async (pid: string, userId: string, feedback: boolean) => {
+    console.log('hello from dal pid', pid, "userid", userId, 'feedbeack', feedback);
+
     let thumbsUpValue = 0;
     let thumbsDownValue = 0;
 
@@ -88,24 +114,13 @@ const feedbackReviews = async (pid: string,userId: string, feedback: boolean) =>
     const res = await sendQueryToDatabase(query, values)
     const { rows } = res
     const array = []
-    array[0] = {"items":rows}
+    array[0] = { "items": rows }
     console.log('Query result from feedbackReviews:', rows);
     return array;
 
 };
 
-const getProductBySearch = async (search: string) => {
-    const res = await fetch(`${erp}/shopInventory/?search=${search}`) 
-    console.log('from search firs',res)
-    const resConverted = await res.json()
-    console.log('hellow from dal search', resConverted);
 
-    if(res.ok && resConverted.length>0){
-        return resConverted
-    }
-    const data = products 
-    // console.log('hellow from dal search data', data); 
-return data}
 
 
 const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> => {
@@ -114,6 +129,6 @@ const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> =
     const data = await res.query(query, values).catch(err => console.log(err));
     res.release()
     return data
-  }
+}
 
-export default {getProductByID, getTop5Products, saveReviewsToDB, getReviewsFromDB, feedbackReviews, getProductBySearch,getTop5ForCategory}
+export default { getProductByID, getTop5Products, getProductBySearch, getTop5ForCategorys, getCategoryByName, saveReviewsToDB, getReviewsFromDB, feedbackReviews }

@@ -50,39 +50,55 @@ app.listen(port, async () => {
 });
 
 
-// =====================================================================
-
-
-// server.ts
+// ==========================================================================
+// ==========================================================================
 
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 
+// TypeDefs.
 import { userTypeDefs } from "./GraphQL/schema/userSchema.js";
-import { userResolvers } from "./GraphQL/resolvers/userResolvers.js";
 import { productTypeDefs } from "./GraphQL/schema/productSchema.js";
+
+// Resolvers.
+import { userResolvers } from "./GraphQL/resolvers/userResolvers.js";
 import { productResolvers } from "./GraphQL/resolvers/productResolvers.js";
 
+
+// Combining type definitions from user and product schemas
+const typeDefs = `
+  ${userTypeDefs} 
+  ${productTypeDefs}
+`;
+
+// Combining resolver objects for users and products
+const resolvers = {
+  Query: {
+    ...userResolvers.Query,
+  ...productResolvers.Query
+  },
+  Mutation: {
+    ...userResolvers.Mutation
+  }
+};
+
+
+// Creating a new ApolloServer instance with type definitions and resolvers
+const server = new ApolloServer({ typeDefs, resolvers });
+
+
+// Function to start the server on a specified port
 const startServer = async (server: ApolloServer<any>, port: number) => {
   const { url } = await startStandaloneServer(server, {
     listen: { port },
   });
 
+  // Logging the server's URL once it's ready
   console.log(`🚀  Server ready at: ${url}`);
 };
 
-const createApolloServer = (typeDefs: any, resolvers: any) => {
-  return new ApolloServer({ typeDefs, resolvers });
-};
+// Port.
+const PORT = 3000;
 
-const userServer = createApolloServer(userTypeDefs, userResolvers);
-const productServer = createApolloServer(productTypeDefs, productResolvers);
-
-const servers = [
-  { server: userServer, port: 1000 },
-  { server: productServer, port: 2000 },
-];
-
-servers.forEach(({ server, port }) => {
-  startServer(server, port);
-});
+// Start server.
+startServer(server, PORT)

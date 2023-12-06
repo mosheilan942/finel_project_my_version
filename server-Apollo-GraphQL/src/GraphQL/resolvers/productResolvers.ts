@@ -1,31 +1,61 @@
-import productDal from "../../dal/productsDal.js"
+import ProductDAL from "../../dal/productsDal.js";
+import Product from "../../types/Product.js";
+import Category from "../../types/Category.js";
 
-
+interface ResolverArgs {
+  id: string;
+  search: string;
+  name: string;
+}
 
 export const productResolvers = {
-    Query: {
-      async getProductByID({ id }: { id: string }) {
-        const { rows } = await productDal.getProductByID(id);
-        return rows[0];
-      },
-      async getProductBySearch({ search }: { search: string }) {
-        const { rows } = await productDal.getProductBySearch(search);
-        return rows[0];
-      },
-      async getTop5Products() {
-        const { rows } = await productDal.getTop5Products();
-        return rows;
-      },
-      async getTop5ForCategory({ name }: { name: string } ) {
-        const { rows } = await productDal.getTop5ForCategory(name);
-        return rows;
-      },
-      
+  Query: {
+    async getProductByID(_: any, { id }: ResolverArgs): Promise<Product | null> {
+      try {
+        const product = await ProductDAL.getProductByID(id);
+        if (!product) {
+          throw new Error(`Product with ID ${id} not found`);
+        }
+        return product;
+      } catch (error) {
+        throw new Error(`Failed to fetch product with ID: ${id}`);
+      }
     },
-    Mutation: {
-    //   async createProduct(_, { name, price }: { name: string, price: number }) {
-    //     const { rows } = await pool.query('INSERT INTO products(name, price) VALUES($1, $2) RETURNING *', [name, price]);
-    //     return rows[0];
-    //   },
+    async getProductBySearch(_: any, { search }: ResolverArgs): Promise<Product[] | null> {
+      try {
+        const products = await ProductDAL.getProductBySearch(search);
+        if (!products || products.length === 0) {
+          throw new Error(`No products found for search term: ${search}`);
+        }
+        return products;
+      } catch (error) {
+        throw new Error(`Failed to fetch product by search term: ${search}`);
+      }
     },
-  };
+    async getTop5Products(): Promise<Product[]> {
+      try {
+        const products = await ProductDAL.getTop5Products();
+        return products;
+      } catch (error) {
+        throw new Error(`Failed to fetch top 5 products`);
+      }
+    },
+    async getTop5ForCategorys(): Promise<Category[] | undefined> {
+      try {
+        const category = await ProductDAL.getTop5ForCategorys();
+        return category;
+      } catch (error) {
+        throw new Error(`Failed to fetch top 5 products for category`);
+      }
+    },
+    async getCategoryByName(_: any, { name }: ResolverArgs): Promise<Category | undefined> {
+      try {
+        const category = await ProductDAL.getCategoryByName(name);
+        return category;
+      } catch (error) {
+        throw new Error(`Failed to fetch top 5 products for category: ${name}`);
+      }
+    },
+  }
+};
+

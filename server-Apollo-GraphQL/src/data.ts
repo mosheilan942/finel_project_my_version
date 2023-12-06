@@ -59,7 +59,7 @@ const products: Product[] = [
     // ... (Repeat the same structure for other products)
   ];
   
-  const categories:Category[] = [
+  const categories: Category[] = [
     {
       id: "1",
       name: "Category A",
@@ -86,4 +86,4 @@ const products: Product[] = [
       clicked: 90,
     },
   ];
-export  {products,categories}
+export  {products, categories}

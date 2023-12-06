@@ -33,15 +33,19 @@ type Product {
   tags: Tag!
 }
 
+
+type Category {
+  id: String!
+  name: String!
+  clicked: Int!
+}
+
+
 type Query {
   getProductByID(id: ID!): Product
-  getProductBySearch(search: String!): Product
+  getProductBySearch(search: String!): [Product]
   getTop5Products: [Product]
-  getTop5ForCategory(name: String!): [Product]
+  getTop5ForCategorys: [Category]
+  getCategoryByName(name: String!): Category
 }
-
-type Mutation {
-  createProduct(name: String!, price: Float!): Product
-}
-
 `;

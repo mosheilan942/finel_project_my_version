@@ -17,20 +17,22 @@ const addUser = async (user: User) => {
     const res = await sendQueryToDatabase(query, values)
     const { rowCount } = res
     console.log(rowCount);
-    return rowCount;
+    if (!rowCount) throw new Error("Not insert user!!!");
+
+    return await getUserByEmail(user.email);
 }
 
 const getAllUser = async () => {
     const query = 'SELECT * FROM users';
-    const res = await sendQueryToDatabase(query)
-    return res;
+    const { rows } = await sendQueryToDatabase(query)
+    return rows;
 }
 
 const getUser = async (userId: string) => {
     const query = 'SELECT * FROM users WHERE userid ::text = $1';
     const values = [userId];
-    const res = await sendQueryToDatabase(query, values)
-    return res;
+    const { rows } = await sendQueryToDatabase(query, values)
+    return rows;
 }
 
 const getUserByEmail = async (email: string): Promise<User[]> => {
@@ -44,9 +46,7 @@ const getUserByEmail = async (email: string): Promise<User[]> => {
 const sendQueryToDatabase = async (query: string, values: any[] = []): Promise<any> => {
     const pool = new Pool()
     const res = await pool.connect()
-    // console.log("hi from userDal, sendQueryToDatabase:", values);
     const data = await res.query(query, values).catch(err => console.log(err));
-    // console.log("hi from userDal, sendQueryToDatabase:", data);
     res.release()
     return data
 }
