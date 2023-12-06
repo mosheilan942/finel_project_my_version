@@ -36,7 +36,8 @@ const LoginPage = () => {
         const password = data.get('password') || '';
         try {
             setIsLoading(true);
-            await login(email.toString(), password.toString());
+            const name = localStorage.getItem('name');
+            await login(email.toString(), password.toString(),name||'');
             setIsLoading(false);
             // sendCartToServer();
             toastSuccess('Login successful');

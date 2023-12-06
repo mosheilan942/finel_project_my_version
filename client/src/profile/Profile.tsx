@@ -23,10 +23,10 @@ export default function Profile() {
   const Nav = useNavigate();
   const context = useContext(UserContext)!;
   const { userInfo } = context;
+  const name = localStorage.getItem("name");
 
   useEffect(() => {
     setUser(userInfo);
-    setNewName(userInfo?.name || "");
     setNewEmail(userInfo?.email || "");
   }, [userInfo]);
 
@@ -58,7 +58,6 @@ export default function Profile() {
 
   const handleCancel = () => {
     setEditName(false);
-    setNewName(user?.name || "");
     setEditEmail(false);
     setNewEmail(user?.email || "");
   };
@@ -94,7 +93,7 @@ export default function Profile() {
             />
           ) : (
             <Typography variant="h5" gutterBottom>
-              Name: {user?.name || "N/A"}
+              Name: {name || "N/A"}
             </Typography>
           )}
           {editName ? (

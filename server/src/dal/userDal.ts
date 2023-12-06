@@ -6,8 +6,13 @@ import { config } from "dotenv";
 config()
 
 const addUser = async (user: User) => {
-    const query = `SELECT add_user_function(email, password);`
-    const values = [user.email, user.password];
+    console.log("user in addUser:", user);
+    const query = `INSERT INTO
+    users (email, password,name)
+    VALUES (
+            $1,
+            $2,$3)`;
+    const values = [user.email, user.password,user.name];
     console.log("values", values);
     const res = await sendQueryToDatabase(query, values)
     const { rowCount } = res
