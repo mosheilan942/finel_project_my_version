@@ -4,6 +4,7 @@ import pg from "pg";
 const { Pool } = pg;
 import { config } from "dotenv";
 config()
+
 const addUser = async (user: User) => {
     console.log("user in addUser:", user);
     const query = `INSERT INTO

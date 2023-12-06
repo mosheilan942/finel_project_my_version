@@ -30,13 +30,14 @@ const Navigate = useNavigate()
 
   return (
     <>
-      {load ? (
-        <div onClick={()=>{Navigate(`store/product/${banner?.productID}`)}} style={{ position: 'fixed', height: '500px', left: 0, top: 75, zIndex: 1000 }}>
-          <img src={banner?.image.url} alt={banner?.image.alt} style={{ width: '100px' }} />
+      {load && (
+        <div  style={{ position: 'fixed', height: '500px', left: 0, top: 75, zIndex: 1000 }}>
+         <button onClick={()=>{setLoad(false)}}>X</button>
+          <img src={banner?.image.url} alt={banner?.image.alt} style={{ width: '100px' }}
+           onClick={()=>{Navigate(`/store/product/${banner?.productID}`)}} />
         </div>
-      ) : (
-        <p>Banner not available</p>
-      )}
+      ) 
+      }
     </>
   );
 }

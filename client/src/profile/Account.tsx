@@ -85,7 +85,7 @@ export default function FullWidthGrid() {
           </Link>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Link to={"/store/account"} style={{ textDecoration: "none" }}>
+          <Link to={"/store/settings"} style={{ textDecoration: "none" }}>
             <Item>
               <SettingsIcon />
               <h3 style={{ color: "	#ADD8E6" }}>Account Settings</h3>

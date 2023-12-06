@@ -13,6 +13,10 @@ const { Pool } = pg;
 import { config } from "dotenv";
 import ordersRouter from "./routes/ordersRouets.js";
 import bannerRoutes from "./routes/bannerRouetes.js";
+// import { createHandler } from 'graphql-http/lib/use/http';
+// import { schema } from "./graphql/schema.js";
+// import http from 'http';
+
 config();
 
 const app = express();
@@ -34,6 +38,7 @@ app.use("/products", productRoutes);
 app.use("/orders", ordersRouter);
 app.use("/banner", bannerRoutes);
 app.use("/", categoryRoutes);
+// app.get('/graphql', createHandler({ schema }));
 
 app.use(errorHandler);
 

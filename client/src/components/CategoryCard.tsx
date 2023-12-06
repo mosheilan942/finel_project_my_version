@@ -10,6 +10,7 @@ type props = {
 };
 export default function CategoryCard({ category }: props) {
   const navigate = useNavigate();
+  
   const handleClick = async () => {
     try {
         navigate(`/store/category/${category.name}`);

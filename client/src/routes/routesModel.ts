@@ -11,13 +11,14 @@ const ROUTES = {
     ADDRESS:'/store/address',
     SERVICE:'/store/service',
     ORDERS:'/store/orders',
-    SHIPMENT:'/store/shipment',
+    SETTINGS:'/store/settings',
     CHECKOUT: "/store/checkout/:totalAmount",
     CONNECT: "/store/connect",
     WISHLIST: "/store/wishlist",
     PROFILE: "/store/profile",
     SEARCH: "/store/search",
     RESET: "/store/resetPassword",
+    CHAT: "/store/chat",
 };
 
 export default ROUTES;

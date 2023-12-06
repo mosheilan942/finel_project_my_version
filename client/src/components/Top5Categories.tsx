@@ -41,7 +41,7 @@ export default function Top5Categories() {
       {load ? (
         <>
           <Typography display={'flex'} justifyContent={'center'} variant="h4">
-            Top 5 Categories
+            Top 4 Categories
           </Typography>
           {top5Categories && (
             <Grid container direction="row" justifyContent="center" alignItems="center">
