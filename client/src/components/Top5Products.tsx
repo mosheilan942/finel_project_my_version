@@ -44,22 +44,16 @@ function Top5ProductsPage() {
       {load ? (
         <>
           <Typography marginTop={5} display={'flex'} justifyContent={'center'} variant="h4">
-            Top 5 Products
+            Top 3 Products
           </Typography>
 
           <Grid
             container
-            direction="row"
-            justifyContent="space-between"
+            justifyContent="center"
             alignItems="center"
-            sx={{
-              marginLeft: '3px',
-              marginRight: '3px',
-              paddingLeft: '3px',
-              paddingRight: '3px',
-            }}
+
           >
-            {top5Products.map((product) => (
+            {top5Products.slice(0,3).map((product) => (
               <ProductCardsForHomePage key={product.id} product={product} />
             ))}
           </Grid>

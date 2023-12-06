@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import BannerInterface  from '../types/Banner';
 import {useNavigate}  from 'react-router-dom';
-const api = import.meta.env.VITE_API_URL
+const api = import.meta.env.VITE_API_URI
+
 
 export default function BannerSide() {
   const [banner, setBanner] = useState<BannerInterface | null>(); 
@@ -30,13 +31,14 @@ const Navigate = useNavigate()
 
   return (
     <>
-      {load ? (
-        <div onClick={()=>{Navigate(`store/product/${banner?.productID}`)}} style={{ position: 'fixed', height: '500px', left: 0, top: 75, zIndex: 1000 }}>
-          <img src={banner?.image.url} alt={banner?.image.alt} style={{ width: '100px' }} />
+      {load && (
+        <div  style={{ position: 'fixed', height: '500px', left: 0, top: 75, zIndex: 1000 }}>
+         <button onClick={()=>{setLoad(false)}}>X</button>
+          <img src={banner?.image.url} alt={banner?.image.alt} style={{ width: '100px' }}
+           onClick={()=>{Navigate(`/store/product/${banner?.productID}`)}} />
         </div>
-      ) : (
-        <p>Banner not available</p>
-      )}
+      ) 
+      }
     </>
   );
 }

@@ -8,7 +8,6 @@ import ProductPage from "../pages/ProductPage";
 import CartPage from "../pages/CartPage";
 import ComparePage from "../pages/ComparePage";
 import Account from "../profile/Account";
-import Shipment from "../profile/Shipment";
 import Orders from "../profile/Orders";
 import CustomerService from "../profile/CustomerService";
 import Addrees from "../profile/Addrees";
@@ -19,6 +18,8 @@ import WishList from "../profile/WishList";
 import Profile from "../profile/Profile";
 import SearchProducts from "../pages/Checkout/SearchProducts";
 import PasswordReset from "../profile/PasswordReset";
+import Chat from "../profile/Chat";
+import Settings from "../profile/Settings";
 
 const Router = () => {
   return (
@@ -34,7 +35,7 @@ const Router = () => {
         <Route path={ROUTES.ACCOUNT} element={<Account />} />
         <Route path={ROUTES.SERVICE} element={<CustomerService />} />
         <Route path={ROUTES.ORDERS} element={<Orders />} />
-        <Route path={ROUTES.SHIPMENT} element={<Shipment />} />
+        <Route path={ROUTES.SETTINGS} element={<Settings />} />
         <Route path={ROUTES.ADDRESS} element={<Addrees />} />
         <Route path={ROUTES.CONNECT} element={<ContactUs />} />
         <Route path={ROUTES.CHECKOUT} element={<CheckoutPage />} />
@@ -42,6 +43,7 @@ const Router = () => {
         <Route path={ROUTES.PROFILE} element={<Profile />} />
         <Route path={ROUTES.SEARCH} element={<SearchProducts />} />
         <Route path={ROUTES.RESET} element={<PasswordReset />} />
+        <Route path={ROUTES.CHAT} element={<Chat/>} />
       </Route>
       <Route path={ROUTES.DEFAULT} element={<h1>404 Not Found</h1>} />
     </Routes>
