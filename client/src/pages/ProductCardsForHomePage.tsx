@@ -34,18 +34,18 @@ export default function ProductCardsForHomePage({
         sx={{
           marginBottom: "20px",
           padding: "5px",
-          backgroundColor: "light gray",
         }}
       >
         <Card
           onClick={handleClick}
           sx={{
             width: 370,
-            height: 425,
+            height: 415,
             margin: "2px 3px 2px 2px",
             marginLeft: "15px",
             boxSizing: "border-box",
             boxShadow: "0 5px 8px rgba(0, 0, 0.9, 0.8)",
+            backgroundColor: " gray",
             transition: "transform 0.3s",
             "&:hover": {
               transform: "scale(1.03)",

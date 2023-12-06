@@ -4,12 +4,9 @@ import pg from "pg";
 const { Pool } = pg;
 import { config } from "dotenv";
 config()
+
 const addUser = async (user: User) => {
-    const query = `INSERT INTO
-    users (email, password)
-    VALUES (
-            $1,
-            $2)`;
+    const query = `SELECT add_user_function(email, password);`
     const values = [user.email, user.password];
     console.log("values", values);
     const res = await sendQueryToDatabase(query, values)
