@@ -3,14 +3,15 @@ import handleApiRes from "./apiResHandler";
 // import dotenv from "dotenv";
 // dotenv.config();
 const api = import.meta.env.VITE_API_URI
-async function loginUser(email: string, password: string): Promise<UserInfo> {
+async function loginUser(email: string, password: string,name:string): Promise<UserInfo> {
+    console.log('hello from login api',name)
     const response = await fetch(`${api}
 /users/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password,name }),
     });
     return await handleApiRes(response);
 }
@@ -24,17 +25,16 @@ async function getUser(): Promise<UserInfo> {
 /users/`);
     return await handleApiRes(response);
 }
-async function register(email: string, password: string):Promise<UserInfo> {
+async function register(email: string, password: string,name:string):Promise<any> {
 
-    console.log('hello from register api',email,password)
+    console.log('hello from register api',email,password,name)
 
-    const response = await fetch(`${api}
-/users/register`, {
+    const response = await fetch(`${api}/users/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password , name}),
     });
     return await handleApiRes(response);
 }

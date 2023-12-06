@@ -1,15 +1,16 @@
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Unstable_Grid2";
+import Grid from "@mui/material/Grid";
 import CallRoundedIcon from "@mui/icons-material/CallRounded";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import ContactsIcon from '@mui/icons-material/Contacts';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PersonIcon from '@mui/icons-material/Person';
+import ContactsIcon from "@mui/icons-material/Contacts";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import PersonIcon from "@mui/icons-material/Person";
+import HomeIcon from '@mui/icons-material/Home';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { Link } from "react-router-dom";
-
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -17,75 +18,87 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
-  height: "200px",
-  width: "250px",
-  marginBottom: "10px",
+  minHeight: "200px",
+  minWidth: "250px",
+  marginBottom: theme.spacing(2),
   transition: "transform 0.3s",
   "&:hover": {
     transform: "scale(1.03)",
-  }
+  },
 }));
-
-
 
 export default function FullWidthGrid() {
   return (
-    <Box sx={{ flexGrow: 1, paddingLeft: "100px", paddingTop: '35px' }} >
-      <Grid container spacing={3} sx={{ paddingLeft: "120px" }}>
-        <Grid xs={3} md={3}>
-          <Link to={"/store/address"} style={{ color: "lightblue", textDecorationLine: 'none' }}>
-            <Item
-            >
-              <ContactsIcon></ContactsIcon>
-              <h3 style={{ color: "lightblue" }}>Your Addresses</h3>information
-              about your address
+    <Box sx={{ flexGrow: 1, padding: "20px" }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Link to={"/store/address"} style={{ textDecoration: "none" }}>
+            <Item>
+              <ContactsIcon />
+              <h3 style={{ color: "	#ADD8E6" }}> Addresses</h3>
+              Mange your addresses
             </Item>
           </Link>
-          <Link to={"/store/orders"} style={{ textDecorationLine: 'none' }}>
-            <Item
-             
-            >
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Link to={"/store/orders"} style={{ textDecoration: "none" }}>
+            <Item>
               <LocalShippingIcon />
-              <h3 style={{ color: "lightblue" }}>Your Orders</h3>All of your
-              past orders
+              <h3 style={{ color: "	#ADD8E6" }}>Your Orders</h3>
+              All of your past orders
             </Item>
           </Link>
         </Grid>
-        <Grid xs={3} md={3}>
-          <Link to={"/store/service"} style={{ textDecorationLine: 'none' }}>
-            <Item
-
-            >
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Link to={"/store/service"} style={{ textDecoration: "none" }}>
+            <Item>
               <CallRoundedIcon />
-              <h3 style={{ color: "lightblue" }}>customer services</h3>stay in
-              conttect with us
-            </Item>
-          </Link>
-          <Link to={"/store/cart"} style={{ color: "lightblue", textDecorationLine: 'none' }}>
-            <Item
-
-            >
-              <ShoppingCartIcon />
-              <h3 style={{ color: "lightblue" }}>Your Cart</h3>
+              <h3 style={{ color: "	#ADD8E6" }}>Customer Services</h3>
+              Stay in contact with us
             </Item>
           </Link>
         </Grid>
-        <Grid xs={3} md={3}>
-          <Link to='/store/profile' style={{ color: "lightblue", textDecorationLine: 'none' }}>
-            <Item
-            >
-              <p>
-              </p>{" "}
-              <PersonIcon />
-              <h3 style={{ color: "lightblue" }}>profile</h3>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Link to={"/store/cart"} style={{ textDecoration: "none" }}>
+            <Item>
+              <ShoppingCartIcon />
+              <h3 style={{ color: "	#ADD8E6" }}>Your Cart</h3>
             </Item>
           </Link>
-          <Link to={'/store/wishlist'} style={{ color: "lightblue", textDecorationLine: 'none' }}>
-            <Item
-
-            >
-              <FavoriteIcon></FavoriteIcon>
-              <h3 style={{ color: "lightblue", textDecorationLine: 'none' }}>WishList</h3>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Link to='/store/profile' style={{ textDecoration: "none" }}>
+            <Item>
+              <PersonIcon />
+              <h3 style={{ color: "	#ADD8E6" }}>Profile</h3>
+              Manage your profile information
+            </Item>
+          </Link>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Link to={"/store/wishlist"} style={{ textDecoration: "none" }}>
+            <Item>
+              <FavoriteIcon />
+              <h3 style={{ color: "	#ADD8E6" }}>Wishlist</h3>
+              See all of your favorite items
+            </Item>
+          </Link>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Link to={"/store/settings"} style={{ textDecoration: "none" }}>
+            <Item>
+              <SettingsIcon />
+              <h3 style={{ color: "	#ADD8E6" }}>Account Settings</h3>
+              Manage your account settings
+            </Item>
+          </Link>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Link to={"/store"} style={{ textDecoration: "none" }}>
+            <Item>
+              <HomeIcon />
+              <h3 style={{ color: "	#ADD8E6" }}>home page</h3>
+              Go back to home page
             </Item>
           </Link>
         </Grid>

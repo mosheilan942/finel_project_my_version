@@ -1,10 +1,12 @@
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
-
-export default function BasicRating() {
-//   const [value, setValue] = React.useState<number | null>(2);
-const value = 3
+interface Props {
+    rating: number
+}
+export default function BasicRating({rating}: Props) {
+    console.log('this is rating',rating)
+const value = Number(rating)
   return (
     <Box
       sx={{

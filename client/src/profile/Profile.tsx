@@ -12,26 +12,21 @@ import {
 import { UserContext } from "../UserContext";
 import UserInfo from "../types/UserInfo";
 import axios from "axios";
-// import PersonIcon from '@mui/icons-material/Person';
-// import Circle from '@mui/icons-material/accountcircle';
-// import Personface from '@mui/icons-material/face';
-
-
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const [user, setUser] = useState<UserInfo | undefined>(undefined);
   const [editName, setEditName] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
-//   const [editIcon, setEditIcon] = useState(false);
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
-//   const [newIcon, setNewIcon] = useState();
+  const Nav = useNavigate();
   const context = useContext(UserContext)!;
   const { userInfo } = context;
+  const name = localStorage.getItem("name");
 
   useEffect(() => {
     setUser(userInfo);
-    setNewName(userInfo?.name || "");
     setNewEmail(userInfo?.email || "");
   }, [userInfo]);
 
@@ -63,19 +58,21 @@ export default function Profile() {
 
   const handleCancel = () => {
     setEditName(false);
-    setNewName(user?.name || "");
     setEditEmail(false);
     setNewEmail(user?.email || "");
-    // setNewIcon(null) 
   };
 
   return (
-    <Card sx={{ maxWidth: 450, margin: 2, padding: 1, marginLeft: 52 ,marginTop:8}}>
-      <CardHeader title="Profile" >
-        </CardHeader>
-         {/* <PersonIcon/>
-            <Personface/>
-            <Circle/> */}
+    <Card
+      sx={{
+        maxWidth: 450,
+        margin: 2,
+        padding: 1,
+        marginLeft: 52,
+        marginTop: 8,
+      }}
+    >
+      <CardHeader title="Profile"></CardHeader>
       <Divider />
       <CardContent>
         <Box
@@ -96,9 +93,18 @@ export default function Profile() {
             />
           ) : (
             <Typography variant="h5" gutterBottom>
-              Name: {user?.name || "N/A"}
+              Name: {name || "N/A"}
             </Typography>
           )}
+          {editName ? (
+            <>
+              <Button onClick={handleNameSave}>Save Name</Button>
+              <Button onClick={handleCancel}>Cancel</Button>
+            </>
+          ) : (
+            <Button onClick={handleNameEdit}>Edit Name</Button>
+          )}
+
           {editEmail ? (
             <TextField
               value={newEmail}
@@ -111,33 +117,24 @@ export default function Profile() {
               Email: {user?.email || "N/A"}
             </Typography>
           )}
+          {editEmail ? (
+            <>
+              <Button onClick={handleEmailSave}>Save Email</Button>
+              <Button onClick={handleCancel}>Cancel</Button>
+            </>
+          ) : (
+            <Button onClick={handleEmailEdit}>Edit Email</Button>
+          )}
 
-          <Box>
-            {editName ? (
-              <>
-                <Button onClick={handleNameSave}>Save Name</Button>
-                <Button onClick={handleCancel}>Cancel</Button>
-              </>
-            ) : (
-              <Button onClick={handleNameEdit}>Edit Name</Button>
-            )}
-            {editEmail ? (
-              <>
-                <Button onClick={handleEmailSave}>Save Email</Button>
-                <Button onClick={handleCancel}>Cancel</Button>
-              </>
-            ) : (
-              <Button onClick={handleEmailEdit}>Edit Email</Button>
-            )}
-            {editEmail ? (
-              <>
-                <Button onClick={handleEmailSave}>Save Email</Button>
-                <Button onClick={handleCancel}>Cancel</Button>
-              </>
-            ) : (
-              <Button onClick={handleEmailEdit}>Edit Email</Button>
-            )}
-          </Box>
+          <Button
+            onClick={() => Nav("/store/resetPassword")}
+            variant="contained"
+            color="primary"
+            style={{ marginTop: 20 }}
+          >
+            Reset Password
+          </Button>
+          <Box></Box>
         </Box>
       </CardContent>
     </Card>

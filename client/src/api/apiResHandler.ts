@@ -5,7 +5,6 @@ const handleApiRes = async (res: Response) => {
             return null;
         }
         const data = await res.json();
-        console.log('hello from apiResHandler',data);
         return data;
     } else {
         const errorData = await res.json();

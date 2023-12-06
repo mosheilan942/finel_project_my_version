@@ -5,15 +5,12 @@ const erp = process.env.ERP_BASE_URL;
 const banner = process.env.BANNER_BASE_URL;
 const getCategories = async () => {
 
-    const data = categories
 const res = await fetch(`${erp}/shopInventory/categories`)
 const resConverted = await res.json()
 // console.log('res categories in dal ',resConverted);
 if(res.ok){
     return resConverted
 }
-// console.log('data in dal in get categories',data);
-return data
 };
 
 // OMS 

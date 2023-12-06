@@ -16,6 +16,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
     res.status(STATUS_CODES.CREATED).json({
       email: req.body.email,
       pasword: req.body.password,
+        name: req.body.name,
     });
 });
 const logoutUser = (_req: Request, res: Response) => {

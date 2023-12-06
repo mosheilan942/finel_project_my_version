@@ -14,7 +14,7 @@ interface Review {
 }
 
 interface ProductReviewsProps {
-  reviews: Review[];
+  reviews: Review[] | undefined;
   pid: string | undefined;
 }
 
@@ -91,14 +91,10 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ reviews, pid }) => {
     setShowAllReviews(true);
   };
 
-  const fetchThumbs = async (feedback: boolean) => {
+  const handleThumbsClick = async (feedback: boolean) => {
     try {
-      const thumbs = await productsAPI.reviewFeedbackProduct(
-        feedback,
-        userInfo?.id,
-        pid
-      );
-      console.log("this is thumbs", thumbs);
+      const thumbs = await productsAPI.reviewFeedbackProduct(feedback, userInfo?.id, pid);
+      console.log("Thumbs response:", thumbs);
 
       if (feedback) {
         setThumbsUpCount((prevCount) => prevCount + 1);
@@ -106,7 +102,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ reviews, pid }) => {
         setThumbsDownCount((prevCount) => prevCount + 1);
       }
     } catch (err) {
-      console.error("Error fetching thumbs");
+      console.error("Error fetching thumbs:", err);
     }
   };
 
@@ -114,58 +110,50 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ reviews, pid }) => {
     <div style={reviewStyles.productReviews}>
       <h2 style={reviewStyles.reviewsTitle}>Product Reviews</h2>
 
-      {!Array.isArray(reviews) || reviews.length === 0 ? (
+      {!reviews || reviews.length === 0 ? (
         <p style={reviewStyles.noReviews}>No reviews yet.</p>
       ) : (
         <>
           <ul style={reviewStyles.reviewsList}>
-            {reviews
-              .slice(0, showAllReviews ? reviews.length : 1)
-              .map((review, index) => (
-                <li key={index} style={reviewStyles.reviewItem}>
-                  <div style={reviewStyles.reviewHeader}>
-                    <h3 style={reviewStyles.reviewTitle}>{review.title}</h3>
-                    <div>
-                      <p style={reviewStyles.reviewAuthor}>
-                        By: {review.author}
-                      </p>
-                      <div style={reviewStyles.thumbsContainer}>
-                        <div
-                          onClick={() => {
-                            fetchThumbs(true);
-                            console.log("Thumb Up clicked");
-                          }}
-                        >
-                          <ThumbUpAltIcon style={reviewStyles.thumbsIcon} />
-                          <span>{Number(review.thumbup) + thumbsUpCount}</span>
-                        </div>
+            {Array.isArray(reviews) &&
+              reviews
+                .slice(0, showAllReviews ? reviews.length : 1)
+                .map((review, index) => (
+                  <li key={index} style={reviewStyles.reviewItem}>
+                    <div style={reviewStyles.reviewHeader}>
+                      <h3 style={reviewStyles.reviewTitle}>{review.title}</h3>
+                      <div>
+                        <p style={reviewStyles.reviewAuthor}>By: {review.author}</p>
+                        <div style={reviewStyles.thumbsContainer}>
+                          <div
+                            onClick={() => {
+                              handleThumbsClick(true);
+                              console.log("Thumb Up clicked");
+                            }}
+                          >
+                            <ThumbUpAltIcon style={reviewStyles.thumbsIcon} />
+                            <span>{Number(review.thumbup) + thumbsUpCount}</span>
+                          </div>
 
-                        <div
-                          onClick={() => {
-                            fetchThumbs(false);
-                            console.log("Thumb Down clicked");
-                          }}
-                        >
-                          <ThumbDownAltIcon style={reviewStyles.thumbsIcon} />
-                          <span>
-                            {Number(review.thumbdown) + thumbsDownCount}
-                          </span>
+                          <div
+                            onClick={() => {
+                              handleThumbsClick(false);
+                              console.log("Thumb Down clicked");
+                            }}
+                          >
+                            <ThumbDownAltIcon style={reviewStyles.thumbsIcon} />
+                            <span>{Number(review.thumbdown) + thumbsDownCount}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <p style={reviewStyles.reviewText}>{review.body}</p>
-                  <p style={reviewStyles.reviewRating}>
-                    Rating: {review.rating}/5
-                  </p>
-                </li>
-              ))}
+                    <p style={reviewStyles.reviewText}>{review.body}</p>
+                    <p style={reviewStyles.reviewRating}>Rating: {review.rating}/5</p>
+                  </li>
+                ))}
           </ul>
           {!showAllReviews && (
-            <button
-              style={reviewStyles.seeMoreButton}
-              onClick={handleSeeMoreClick}
-            >
+            <button style={reviewStyles.seeMoreButton} onClick={handleSeeMoreClick}>
               See More Reviews
             </button>
           )}

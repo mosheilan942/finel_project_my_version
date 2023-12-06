@@ -40,7 +40,7 @@ const getTop5Products =  async () => {
 };
 
 const getTop5ForCategory = async (name: string) => {
-    const res = await axios.get(`${process.env.BANNER_BASE_URI}/topFiveCategories{name}`)
+    const res = await axios.get(`${process.env.BANNER_BASE_URI}/topFiveCategories${name}`)
     return res.data
 };
 
@@ -96,16 +96,10 @@ const feedbackReviews = async (pid: string,userId: string, feedback: boolean) =>
 
 const getProductBySearch = async (search: string) => {
     const res = await fetch(`${erp}/shopInventory/?search=${search}`) 
-    console.log('from search firs',res)
     const resConverted = await res.json()
-    console.log('hellow from dal search', resConverted);
-
-    if(res.ok && resConverted.length>0){
         return resConverted
+    
     }
-    const data = products 
-    // console.log('hellow from dal search data', data); 
-return data}
 
 
 const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> => {
