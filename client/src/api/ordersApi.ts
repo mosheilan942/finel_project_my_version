@@ -19,8 +19,7 @@ async function checkDebitCard(debitCard: CreditCardDetails): Promise<CreditCardD
 
 async function sendOrder(order: OrderInterface): Promise<OrderInterface> {
     console.log('order in api',order);
-    const response = await fetch(`${api}
-    /orders/checkout/order`, {
+    const response = await fetch(`${api}/orders/checkout/order`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
