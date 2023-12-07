@@ -4,6 +4,9 @@ import { GetOrderInterface, OrderInterface } from '../types/order';
 import { Product } from '../types/Product';
 import { UserContext } from '../UserContext';
 
+const api = import.meta.env.VITE_API_URI
+
+
 export default function Orders() {
   const [orders, setOrders] = useState<GetOrderInterface[]>(); 
   const [loading, setLoading] = useState<boolean>(false);  
@@ -13,7 +16,7 @@ export default function Orders() {
 
   async function getOrders(userId: string | undefined) {
     try {
-      const response = await fetch(`/orders${userId}`);
+      const response = await fetch(`${api}/orders/allOrders/${userId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch orders');
       }

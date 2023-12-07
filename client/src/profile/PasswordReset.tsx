@@ -1,44 +1,56 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent,useContext } from "react";
 import { TextField, Button, Typography, Paper, Container } from "@mui/material";
+import { UserContext } from '../UserContext'
 import axios from "axios";
+import usersAPI from "../api/usersAPI";
+
+const api = import.meta.env.VITE_API_URI
+const RESET_PASSWORD_ENDPOINT = `${api}/users/resetPassword/`;
+
+
 
 const PasswordReset: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailAuth, setEmailAuth] = useState(false);
+  const context = useContext(UserContext)!;
 
-  async function checkEmail(email: string) {
+
+  const checkEmail = async (email: string) => {
     try {
-      const response = await axios.get(`api/users/resetPassword/${email}`);
-      console.log(response.data);
-      if (response.status >= 200 && response.status < 400) {
+      const response = await usersAPI.checkEmail(`${email}`) 
+      if (response.ok) {
         setEmailAuth(true);
       }
     } catch (error) {
       console.error("Error initiating password reset:", error);
     }
-  }
+  };
 
-  async function sendNewPassword(password: string) {
+  const sendNewPassword = async (password: string) => {
     try {
-      const response = await axios.post(`api/users/resetPassword/${email}`, { password });
-      console.log(response.data);
-      if (response.status >= 200 && response.status < 400) {
+      const response = await axios.post(`${RESET_PASSWORD_ENDPOINT}${email}`, { password });
+      if (response.status === 200) {
       }
     } catch (error) {
       console.error("Error sending new password:", error);
     }
-  }
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await checkEmail(email);
+    if (email) {
+      await checkEmail(email);
+    }
   };
 
   const handleReset = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await sendNewPassword(password);
+    if (password) {
+      await sendNewPassword(password);
+    }
   };
+
 
   return (
     <>

@@ -30,10 +30,11 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
         height: 420, 
         margin: '20px',
         marginBottom: '20px',
-        padding: '3px',
+        // padding: '3px',
         boxSizing: 'border-box',
         boxShadow: '0 5px 8px rgba(0, 0, 0.9, 0.8)',
         marginBlock: '8px',
+        backgroundColor: "gray",
         transition: 'transform 0.3s',
         '&:hover': {
           transform: 'scale(1.03)',

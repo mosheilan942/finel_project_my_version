@@ -3,6 +3,7 @@ import handleApiRes from "./apiResHandler";
 // import dotenv from "dotenv";
 // dotenv.config();
 const api = import.meta.env.VITE_API_URI
+
 async function loginUser(email: string, password: string,name:string): Promise<UserInfo> {
     console.log('hello from login api',name)
     const response = await fetch(`${api}
@@ -15,6 +16,19 @@ async function loginUser(email: string, password: string,name:string): Promise<U
     });
     return await handleApiRes(response);
 }
+
+async function checkEmail(email: string,): Promise<Response> {
+    const response = await fetch(`${api}
+/users/checkEmail`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+    });
+    return await handleApiRes(response);
+}
+
 async function logoutUser(): Promise<{message:string}> {
     const response = await fetch(`${api}
 /users/auth/logout`, { method: "POST" });
@@ -36,6 +50,6 @@ async function register(email: string, password: string,name:string):Promise<any
         },
         body: JSON.stringify({ email, password , name}),
     });
-    return await handleApiRes(response);
+    return response;
 }
-export default { loginUser, logoutUser, getUser , register}
+export default { loginUser, logoutUser, getUser , register,checkEmail}
