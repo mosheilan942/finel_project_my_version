@@ -76,7 +76,7 @@ const CartPage = () => {
             setTotalAmount(total);
         } else {
             const total = cartItems.reduce((sum: any, item: any) => {
-                return sum + item.quantity * item.product_id.salePrice;
+                return sum + item.quantity * item.product_id.saleprice;
             }, 0);
             setTotalAmount(total);
         }
@@ -216,7 +216,7 @@ const CartPage = () => {
                                 <ListItem key={`ListItem-${uuidv4()}`}>
                                     <ListItemText
                                         primary={item.product_id.name}
-                                        secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.product_id.salePrice).toFixed(2) || 0}`}
+                                        secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.product_id.saleprice).toFixed(2) || 0}`}
                                     />
 
                                 </ListItem>

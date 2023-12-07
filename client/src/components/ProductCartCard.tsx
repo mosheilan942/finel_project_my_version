@@ -28,7 +28,9 @@ const ProductCartCard = ({
     const context = useContext(UserContext)!;
     const { userInfo } = context;
 
-   
+    const getPrice = () => {
+        return userInfo ? product.price : product.saleprice;
+    };
 
     const increaseQuantity = async (productId: string) => {
         if (userInfo) {
@@ -37,7 +39,7 @@ const ProductCartCard = ({
                     await cartsAPI.updateQuantity(productId, "inc");
                     
                 setCartQuantity(cartQuantity + 1);
-                setTotalAmount(totalAmount + product.price);
+                setTotalAmount(totalAmount + getPrice());
                 console.log(
                     "hi from increaseQuantity, cartQuantity:",
                     cartQuantity + 1
@@ -59,7 +61,7 @@ const ProductCartCard = ({
                 cartLocalStorageUtils.incQuantityOfProduct(productId);
                 
                 setCartQuantity(cartQuantity + 1);
-                setTotalAmount(totalAmount + product.price);
+                setTotalAmount(totalAmount + getPrice());
                 console.log(
                     "hi from increaseQuantity, cartQuantity:",
                     cartQuantity + 1
@@ -91,7 +93,7 @@ const ProductCartCard = ({
                     cartLocalStorageUtils.decQuantityOfProduct(productId);
                 }
                 setCartQuantity(cartQuantity - 1);
-                setTotalAmount(totalAmount - Number(product.price));
+                setTotalAmount(totalAmount - Number(getPrice()));
 
                 updateCartItemQuantity(productId, cartQuantity - 1);
             } catch (error) {
@@ -124,7 +126,7 @@ const ProductCartCard = ({
                         <Typography variant="body1">
                             {product.description}
                         </Typography>
-                        <Typography variant="body2">{`Price: ${product.price}`}</Typography>
+                        <Typography variant="body2">{`Price: ${getPrice()}`}</Typography>
                     </CardContent>
                 </Box>
 
