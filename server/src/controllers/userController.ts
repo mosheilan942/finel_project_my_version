@@ -37,7 +37,12 @@ const getUser = asyncHandler(async (req, res) => {
   //   email: user.email,
   // });
 });
-export default { registerUser, getUser, logoutUser};
+
+const checkMail = asyncHandler(async (req, res) => {
+  const mail = await userService.checkEmail(req.body.email);
+  res.json(mail)
+});
+export default { registerUser, getUser, logoutUser,checkMail};
 
 
 

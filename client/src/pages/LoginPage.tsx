@@ -29,6 +29,7 @@ const LoginPage = () => {
             navigate(ROUTES.HOME);
         }
     }, [navigate, userInfo]);
+    
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);

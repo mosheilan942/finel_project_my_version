@@ -35,6 +35,7 @@ const Navigate = useNavigate()
          <button onClick={()=>{setLoad(false)}}>X</button>
           <img src={banner?.image.url} alt={banner?.image.alt} style={{ width: '100px' }}
            onClick={()=>{Navigate(`/store/product/${banner?.productID}`)}} />
+         <button onClick={()=>{setLoad(false)}}>X</button>
         </div>
       ) 
       }

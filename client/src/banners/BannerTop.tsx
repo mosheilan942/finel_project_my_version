@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import  BannerInterface  from '../types/Banner';
 import {useNavigate}  from 'react-router-dom';
 const api = import.meta.env.VITE_API_URL 
+
 export default function BannerTop() {
   const [banner, setBanner] = useState<BannerInterface | null>(null); 
   const Navigate = useNavigate()
