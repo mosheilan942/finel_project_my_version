@@ -1,4 +1,3 @@
-// import axios from 'axios';
 // import {
 //     GraphQLObjectType,
 //     GraphQLInt,
@@ -7,7 +6,6 @@
 //     GraphQLList,
 //     GraphQLSchema
 // } from 'graphql';
-// const banner = process.env.BANNER_BASE_URL;
 
 // const ItamType = new GraphQLObjectType({
 //     name: 'WishlistItams',
@@ -56,3 +54,5 @@
 // export const schema = new GraphQLSchema({
 //     query: RootQuery
 // });
+
+

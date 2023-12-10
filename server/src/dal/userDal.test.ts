@@ -12,7 +12,7 @@ describe("User Data Access Layer Tests", () => {
       password: "testpassword",
     };
     const rowCount = await userDal.addUser(user);
-   
+
     expect(rowCount).toBe(1);
   });
 
@@ -20,7 +20,7 @@ describe("User Data Access Layer Tests", () => {
     const email = "test@example.com";
     const users = await userDal.getUserByEmail(email);
 
-    expect(users).not.toBeUndefined();    
+    expect(users).not.toBeUndefined();
     expect(users.length).toBeGreaterThan(0);
 
     const userObj = users[0];
@@ -30,7 +30,7 @@ describe("User Data Access Layer Tests", () => {
 
   test("should retrieve user by ID from the database", async () => {
     const userId = createdUserId;
-    const user = await userDal.getUser(userId!);    
+    const user = await userDal.getUser(userId!);
 
     expect(user).not.toBeUndefined();
     expect(user.rows.length).toBeGreaterThan(0);
@@ -42,7 +42,7 @@ describe("User Data Access Layer Tests", () => {
 
   afterAll(async () => {
     if (createdUserId!) {
-      const deleteQuery = 'DELETE FROM users WHERE user_id = $1';
+      const deleteQuery = 'DELETE FROM users WHERE userid = $1';
       const deleteValues = [createdUserId];
       const deleteRes = await userDal.sendQueryToDatabase(deleteQuery, deleteValues);
       expect(deleteRes.rowCount).toBe(1);

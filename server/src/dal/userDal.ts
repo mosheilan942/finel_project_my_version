@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+
 import User from "../types/User.js";
 import pg from "pg";
 const { Pool } = pg;
@@ -9,12 +9,11 @@ config()
 const addUser = async (user: User) => {
     console.log("user in addUser:", user);
     const query = `INSERT INTO
-    users (email, password,name)
+    users (email, password, name)
     VALUES (
             $1,
             $2,$3)`;
-    const values = [user.email, user.password,user.name];
-    console.log("values", values);
+    const values = [user.email, user.password, user.name];
     const res = await sendQueryToDatabase(query, values)
     const { rowCount } = res
     console.log(rowCount);
@@ -58,9 +57,7 @@ const checkMailInDB = async (email: string): Promise<boolean> => {
 const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> => {
     const pool = new Pool({connectionString: connectionString})
     const res = await pool.connect()
-    // console.log("hi from userDal, sendQueryToDatabase:", values);
     const data = await res.query(query, values).catch(err => console.log(err));
-    // console.log("hi from userDal, sendQueryToDatabase:", data);
     res.release()
     return data
 }
